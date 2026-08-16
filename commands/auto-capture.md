@@ -3,16 +3,16 @@ description: "Enable or disable automatic activity capture"
 argument-hint: "[on|off|status]"
 ---
 
-# /nemp-pro:auto-capture
+# /afmem-pro:auto-capture
 
 Toggle automatic activity capture on or off.
 
 ## Usage
 ```
-/nemp-pro:auto-capture on      # Enable auto-capture
-/nemp-pro:auto-capture off     # Disable auto-capture
-/nemp-pro:auto-capture status  # Check current status
-/nemp-pro:auto-capture         # Show status (same as status)
+/afmem-pro:auto-capture on      # Enable auto-capture
+/afmem-pro:auto-capture off     # Disable auto-capture
+/afmem-pro:auto-capture status  # Check current status
+/afmem-pro:auto-capture         # Show status (same as status)
 ```
 
 ## Arguments
@@ -22,13 +22,13 @@ Toggle automatic activity capture on or off.
 
 ## Instructions
 
-When the user invokes `/nemp-pro:auto-capture`, follow these steps:
+When the user invokes `/afmem-pro:auto-capture`, follow these steps:
 
 ### 1. Parse Argument
 Extract the action: `on`, `off`, or `status` (default to `status` if empty).
 
 ### 2. Configuration File Location
-Auto-capture config is stored in: `.nemp-pro/config.json`
+Auto-capture config is stored in: `memory/pro/config.json`
 
 ```json
 {
@@ -48,10 +48,10 @@ Auto-capture config is stored in: `.nemp-pro/config.json`
 
 **For `on`:**
 ```bash
-mkdir -p .nemp-pro
+mkdir -p memory/pro
 ```
 
-Read or create `.nemp-pro/config.json`, set `autoCapture.enabled = true`, write back.
+Read or create `memory/pro/config.json`, set `autoCapture.enabled = true`, write back.
 
 Confirm:
 ```
@@ -62,12 +62,12 @@ What will be captured:
   - Write: New files created
   - Bash: Git commits, npm/bun commands
 
-Activities saved to: .nemp-pro/activity.log
-Review with: /nemp-pro:activity
+Activities saved to: memory/pro/activity.log
+Review with: /afmem-pro:activity
 ```
 
 **For `off`:**
-Read `.nemp-pro/config.json`, set `autoCapture.enabled = false`, write back.
+Read `memory/pro/config.json`, set `autoCapture.enabled = false`, write back.
 
 Confirm:
 ```
@@ -77,25 +77,25 @@ No automatic activity capture will occur.
 ```
 
 **For `status`:**
-Read `.nemp-pro/config.json` and display current state:
+Read `memory/pro/config.json` and display current state:
 
 ```
 Auto-capture Status
 
   Enabled: Yes/No
   Tools monitored: Edit, Write, Bash
-  Activity log: .nemp-pro/activity.log
+  Activity log: memory/pro/activity.log
   Entries captured: N
 
 Commands:
-  /nemp-pro:auto-capture on   - Enable
-  /nemp-pro:auto-capture off  - Disable
-  /nemp-pro:activity          - View captured activities
+  /afmem-pro:auto-capture on   - Enable
+  /afmem-pro:auto-capture off  - Disable
+  /afmem-pro:activity          - View captured activities
 ```
 
 ### 4. Initialize Config (if not exists)
 
-If `.nemp-pro/config.json` doesn't exist, create it:
+If `memory/pro/config.json` doesn't exist, create it:
 
 ```json
 {
@@ -112,7 +112,7 @@ If `.nemp-pro/config.json` doesn't exist, create it:
       "node_modules/**",
       ".git/**",
       "*.log",
-      ".nemp-pro/**"
+      "memory/pro/**"
     ]
   }
 }
@@ -125,7 +125,7 @@ Use the Read tool to check for existing config, then Write tool to update it.
 ## Example Interactions
 
 ### Enable auto-capture
-User: `/nemp-pro:auto-capture on`
+User: `/afmem-pro:auto-capture on`
 
 ```
 Auto-capture ENABLED
@@ -135,12 +135,12 @@ What will be captured:
   - Write: New files created
   - Bash: Git commits, npm/bun commands
 
-Activities saved to: .nemp-pro/activity.log
-Review captured activities: /nemp-pro:activity
+Activities saved to: memory/pro/activity.log
+Review captured activities: /afmem-pro:activity
 ```
 
 ### Disable auto-capture
-User: `/nemp-pro:auto-capture off`
+User: `/afmem-pro:auto-capture off`
 
 ```
 Auto-capture DISABLED
@@ -149,20 +149,20 @@ No automatic activity capture will occur.
 ```
 
 ### Check status
-User: `/nemp-pro:auto-capture status`
+User: `/afmem-pro:auto-capture status`
 
 ```
 Auto-capture Status
 
   Enabled: Yes
   Tools: Edit, Write, Bash
-  Log: .nemp-pro/activity.log (12 entries)
+  Log: memory/pro/activity.log (12 entries)
 
 Commands:
-  /nemp-pro:auto-capture off  - Disable
-  /nemp-pro:activity          - View log
+  /afmem-pro:auto-capture off  - Disable
+  /afmem-pro:activity          - View log
 ```
 
 ## Related Commands
-- `/nemp-pro:activity` - View captured activity log
-- `/nemp-pro:clear` - Clear activity log
+- `/afmem-pro:activity` - View captured activity log
+- `/afmem-pro:clear` - Clear activity log

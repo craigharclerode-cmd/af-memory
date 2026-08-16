@@ -1,31 +1,31 @@
 ---
-description: "Export Nemp memories to Codex CLI, Cursor, and Windsurf rule files"
+description: "Export AF Memory memories to Codex CLI, Cursor, and Windsurf rule files"
 argument-hint: "[--codex | --cursor | --windsurf | --all | --status]"
 ---
 
-# /nemp-pro:export
+# /afmem-pro:export
 
-Export project memories to AI tool rule files used by Codex CLI (AGENTS.md), Cursor (.cursor/rules/nemp-memory.mdc), and Windsurf (.windsurfrules). Keeps your entire AI toolchain in sync from a single source of truth: `.nemp/memories.json`.
+Export project memories to AI tool rule files used by Codex CLI (AGENTS.md), Cursor (.cursor/rules/afmem-memory.mdc), and Windsurf (.windsurfrules). Keeps your entire AI toolchain in sync from a single source of truth: `memory/memories.json`.
 
 ## Usage
 ```
-/nemp-pro:export --codex      # Generate AGENTS.md for Codex CLI
-/nemp-pro:export --cursor     # Generate .cursor/rules/nemp-memory.mdc for Cursor
-/nemp-pro:export --windsurf   # Generate .windsurfrules for Windsurf
-/nemp-pro:export --all        # Generate all three + sync CLAUDE.md
-/nemp-pro:export --status     # Check which export files exist
+/afmem-pro:export --codex      # Generate AGENTS.md for Codex CLI
+/afmem-pro:export --cursor     # Generate .cursor/rules/afmem-memory.mdc for Cursor
+/afmem-pro:export --windsurf   # Generate .windsurfrules for Windsurf
+/afmem-pro:export --all        # Generate all three + sync CLAUDE.md
+/afmem-pro:export --status     # Check which export files exist
 ```
 
 ## Arguments
 - `--codex` (optional): Export to `AGENTS.md` in project root (Codex CLI format)
-- `--cursor` (optional): Export to `.cursor/rules/nemp-memory.mdc` (MDC frontmatter format)
+- `--cursor` (optional): Export to `.cursor/rules/afmem-memory.mdc` (MDC frontmatter format)
 - `--windsurf` (optional): Export to `.windsurfrules` in project root (plain markdown)
 - `--all` (optional): Run all three exports and trigger CLAUDE.md sync
 - `--status` (optional): Report which export files exist and their last modified timestamps
 
 ## Instructions
 
-When the user invokes `/nemp-pro:export`, follow these steps:
+When the user invokes `/afmem-pro:export`, follow these steps:
 
 ### Step 1: Parse Arguments
 
@@ -33,7 +33,7 @@ Extract the subcommand from the user's input:
 
 ```
 --codex      → Export to AGENTS.md
---cursor     → Export to .cursor/rules/nemp-memory.mdc
+--cursor     → Export to .cursor/rules/afmem-memory.mdc
 --windsurf   → Export to .windsurfrules
 --all        → Run all three exports + CLAUDE.md sync
 --status     → Show export file status
@@ -50,19 +50,19 @@ Before generating any export file, perform these steps to load and prepare memor
 
 ### Step 2: Read memories.json
 
-Read `.nemp/memories.json` using the Read tool:
+Read `memory/memories.json` using the Read tool:
 
 ```bash
-[ -f ".nemp/memories.json" ] && cat .nemp/memories.json
+[ -f "memory/memories.json" ] && cat memory/memories.json
 ```
 
 If the file does not exist, stop and show:
 
 ```
-❌ No Nemp memories found. Run /nemp:init first.
+❌ No AF Memory memories found. Run /afmem:init first.
 
-   To initialize: /nemp:init
-   To save a memory: /nemp:save <key> <value>
+   To initialize: /afmem:init
+   To save a memory: /afmem:save <key> <value>
 ```
 
 ### Step 3: Parse the Memories Array
@@ -78,7 +78,7 @@ The file uses the new array format:
       "created": "2026-02-26T16:00:00.000Z",
       "updated": "2026-02-26T16:00:00.000Z",
       "projectPath": "C:/Users/...",
-      "agent_id": "nemp-init",
+      "agent_id": "afmem-init",
       "tags": ["auto-detected"]
     }
   ]
@@ -138,7 +138,7 @@ After grouping, estimate the output size. Target under 4000 tokens total (approx
 
 ---
 
-## /nemp-pro:export --codex
+## /afmem-pro:export --codex
 
 Generate `AGENTS.md` in the project root for Codex CLI.
 
@@ -147,9 +147,9 @@ Generate `AGENTS.md` in the project root for Codex CLI.
 Using the prepared groups from Steps 2-7, generate the following markdown:
 
 ```
-# Project Memory (powered by Nemp)
-> Auto-generated. Do not edit manually. Source: .nemp/memories.json
-> Last exported: <ISO timestamp> | Memories: <count> | Nemp Pro
+# Project Memory (powered by AF Memory)
+> Auto-generated. Do not edit manually. Source: memory/memories.json
+> Last exported: <ISO timestamp> | Memories: <count> | AF Memory Pro
 
 ## Facts
 - <key>: <value>
@@ -174,8 +174,8 @@ Using the prepared groups from Steps 2-7, generate the following markdown:
 - <key>: <value>
 
 ---
-To update: save memories with /nemp:save in Claude Code, then /nemp-pro:export --codex
-To write back: add entries to .nemp/memories.json following existing format
+To update: save memories with /afmem:save in Claude Code, then /afmem-pro:export --codex
+To write back: add entries to memory/memories.json following existing format
 ```
 
 - Replace `<ISO timestamp>` with the current UTC time in ISO-8601 format.
@@ -197,16 +197,16 @@ Display:
    Size: ~847 bytes (~212 tokens)
 
 💡 Codex CLI reads AGENTS.md automatically from repo root.
-   Run /nemp-pro:export --codex after saving new memories.
+   Run /afmem-pro:export --codex after saving new memories.
 ```
 
 Calculate approximate bytes as the character count of the generated file content. Calculate approximate tokens as `round(bytes / 4)`.
 
 ---
 
-## /nemp-pro:export --cursor
+## /afmem-pro:export --cursor
 
-Generate `.cursor/rules/nemp-memory.mdc` in the project root for Cursor.
+Generate `.cursor/rules/afmem-memory.mdc` in the project root for Cursor.
 
 ### Step 8b: Ensure Directory Exists
 
@@ -222,12 +222,12 @@ Using the prepared groups from Steps 2-7, generate the following MDC file (YAML 
 
 ```
 ---
-description: Project memory and coding context managed by Nemp Memory
+description: Project memory and coding context managed by AF Memory
 globs: ["**/*"]
 alwaysApply: true
 ---
 
-# Project Memory (powered by Nemp)
+# Project Memory (powered by AF Memory)
 
 ## Facts
 - <key>: <value>
@@ -250,7 +250,7 @@ alwaysApply: true
 ## Other
 - <key>: <value>
 
-<!-- Generated by Nemp Pro. Source: .nemp/memories.json -->
+<!-- Generated by AF Memory Pro. Source: memory/memories.json -->
 <!-- Last exported: <ISO timestamp> | Memories: <count> -->
 ```
 
@@ -259,24 +259,24 @@ alwaysApply: true
 
 ### Step 10b: Write the MDC File
 
-Write the generated content to `.cursor/rules/nemp-memory.mdc` using the Write tool.
+Write the generated content to `.cursor/rules/afmem-memory.mdc` using the Write tool.
 
 ### Step 11b: Confirm to User
 
 Display:
 
 ```
-✅ Exported 12 memories to .cursor/rules/nemp-memory.mdc (Cursor)
-   Path: ./.cursor/rules/nemp-memory.mdc
+✅ Exported 12 memories to .cursor/rules/afmem-memory.mdc (Cursor)
+   Path: ./.cursor/rules/afmem-memory.mdc
    Size: ~863 bytes (~216 tokens)
 
 💡 Cursor loads .mdc files with alwaysApply: true at session start.
-   Run /nemp-pro:export --cursor after saving new memories.
+   Run /afmem-pro:export --cursor after saving new memories.
 ```
 
 ---
 
-## /nemp-pro:export --windsurf
+## /afmem-pro:export --windsurf
 
 Generate `.windsurfrules` in the project root for Windsurf.
 
@@ -285,9 +285,9 @@ Generate `.windsurfrules` in the project root for Windsurf.
 Using the prepared groups from Steps 2-7, generate plain markdown with no YAML frontmatter:
 
 ```
-# Project Memory (powered by Nemp)
-> Auto-generated. Do not edit manually. Source: .nemp/memories.json
-> Last exported: <ISO timestamp> | Memories: <count> | Nemp Pro
+# Project Memory (powered by AF Memory)
+> Auto-generated. Do not edit manually. Source: memory/memories.json
+> Last exported: <ISO timestamp> | Memories: <count> | AF Memory Pro
 
 ## Facts
 - <key>: <value>
@@ -311,7 +311,7 @@ Using the prepared groups from Steps 2-7, generate plain markdown with no YAML f
 - <key>: <value>
 
 ---
-To update: save memories with /nemp:save in Claude Code, then /nemp-pro:export --windsurf
+To update: save memories with /afmem:save in Claude Code, then /afmem-pro:export --windsurf
 ```
 
 - Only include section headers for groups with at least one memory.
@@ -330,12 +330,12 @@ Display:
    Size: ~821 bytes (~205 tokens)
 
 💡 Windsurf reads .windsurfrules from the repo root automatically.
-   Run /nemp-pro:export --windsurf after saving new memories.
+   Run /afmem-pro:export --windsurf after saving new memories.
 ```
 
 ---
 
-## /nemp-pro:export --all
+## /afmem-pro:export --all
 
 Run all three exports and also sync CLAUDE.md.
 
@@ -344,32 +344,32 @@ Run all three exports and also sync CLAUDE.md.
 Execute the following in order:
 
 1. **Codex export**: perform Steps 8a–10a to generate `AGENTS.md`.
-2. **Cursor export**: perform Steps 8b–11b to generate `.cursor/rules/nemp-memory.mdc`.
+2. **Cursor export**: perform Steps 8b–11b to generate `.cursor/rules/afmem-memory.mdc`.
 3. **Windsurf export**: perform Steps 8c–10c to generate `.windsurfrules`.
-4. **CLAUDE.md sync**: generate the Nemp section of `CLAUDE.md` from memories (same logic as `/nemp:export`). Update only the Nemp section; preserve all other content.
+4. **CLAUDE.md sync**: generate the AF Memory section of `CLAUDE.md` from memories (same logic as `/afmem:export`). Update only the AF Memory section; preserve all other content.
 
 ### Step 9d: Confirm to User
 
 Display a combined summary:
 
 ```
-✅ Nemp Pro — All exports complete
+✅ AF Memory Pro — All exports complete
 
    AGENTS.md                         ./AGENTS.md             ~847 bytes
-   .cursor/rules/nemp-memory.mdc     ./.cursor/rules/...     ~863 bytes
+   .cursor/rules/afmem-memory.mdc     ./.cursor/rules/...     ~863 bytes
    .windsurfrules                    ./.windsurfrules        ~821 bytes
    CLAUDE.md                         ./CLAUDE.md             updated
 
    Memories exported: 12
    Extinct skipped:   2
 
-💡 All AI tools are now in sync with .nemp/memories.json.
-   Run /nemp-pro:export --all after any /nemp:save to refresh all targets.
+💡 All AI tools are now in sync with memory/memories.json.
+   Run /afmem-pro:export --all after any /afmem:save to refresh all targets.
 ```
 
 ---
 
-## /nemp-pro:export --status
+## /afmem-pro:export --status
 
 Check which export files exist and their last modified timestamps. Do not modify any files.
 
@@ -378,17 +378,17 @@ Check which export files exist and their last modified timestamps. Do not modify
 Run a combined existence and timestamp check:
 
 ```bash
-ls -l AGENTS.md .cursor/rules/nemp-memory.mdc .windsurfrules 2>/dev/null
+ls -l AGENTS.md .cursor/rules/afmem-memory.mdc .windsurfrules 2>/dev/null
 ```
 
 For each file, note whether it exists and extract its last-modified timestamp.
 
 ### Step 9e: Read Auto-Export Config (Optional)
 
-Check whether `.nemp-pro/config.json` exists:
+Check whether `memory/pro/config.json` exists:
 
 ```bash
-[ -f ".nemp-pro/config.json" ] && cat .nemp-pro/config.json || echo "NO_PRO_CONFIG"
+[ -f "memory/pro/config.json" ] && cat memory/pro/config.json || echo "NO_PRO_CONFIG"
 ```
 
 If the file exists, read the `autoExport` settings to determine which targets are enabled.
@@ -399,13 +399,13 @@ If the file exists, read the `autoExport` settings to determine which targets ar
 Export Status
 
   AGENTS.md                        ✅ exists   Last updated: 2026-03-01 14:23
-  .cursor/rules/nemp-memory.mdc    ❌ not found
+  .cursor/rules/afmem-memory.mdc    ❌ not found
   .windsurfrules                   ✅ exists   Last updated: 2026-03-01 14:23
 
 Auto-export: Enabled → targets: codex, windsurf
 ```
 
-If `.nemp-pro/config.json` does not exist or has no `autoExport` key:
+If `memory/pro/config.json` does not exist or has no `autoExport` key:
 
 ```
 Auto-export: Not configured
@@ -414,7 +414,7 @@ Auto-export: Not configured
 If all three files are missing:
 
 ```
-No export files found. Run /nemp-pro:export --all to generate all targets.
+No export files found. Run /afmem-pro:export --all to generate all targets.
 ```
 
 ---
@@ -423,9 +423,9 @@ No export files found. Run /nemp-pro:export --all to generate all targets.
 
 ### Example 1: Export to Codex CLI
 
-User: `/nemp-pro:export --codex`
+User: `/afmem-pro:export --codex`
 
-Given `.nemp/memories.json` with 7 active memories (2 facts, 2 preferences, 3 other):
+Given `memory/memories.json` with 7 active memories (2 facts, 2 preferences, 3 other):
 
 ```
 ✅ Exported 7 memories to AGENTS.md (Codex CLI)
@@ -433,18 +433,18 @@ Given `.nemp/memories.json` with 7 active memories (2 facts, 2 preferences, 3 ot
    Size: ~650 bytes (~163 tokens)
 
 💡 Codex CLI reads AGENTS.md automatically from repo root.
-   Run /nemp-pro:export --codex after saving new memories.
+   Run /afmem-pro:export --codex after saving new memories.
 ```
 
 Generated `AGENTS.md`:
 
 ```markdown
-# Project Memory (powered by Nemp)
-> Auto-generated. Do not edit manually. Source: .nemp/memories.json
-> Last exported: 2026-03-02T09:15:00.000Z | Memories: 7 | Nemp Pro
+# Project Memory (powered by AF Memory)
+> Auto-generated. Do not edit manually. Source: memory/memories.json
+> Last exported: 2026-03-02T09:15:00.000Z | Memories: 7 | AF Memory Pro
 
 ## Facts
-- project-name: Nemp Memory — Claude Code Plugin for persistent local memory
+- project-name: AF Memory — Claude Code Plugin for persistent local memory
 - version: 0.3.0
 
 ## Preferences
@@ -452,26 +452,26 @@ Generated `AGENTS.md`:
 - preferred-style: functional
 
 ## Other
-- author: Sukin Shetty
+- author: Craig Harclerode
 - database: PostgreSQL
 - package-manager: npm
 
 ---
-To update: save memories with /nemp:save in Claude Code, then /nemp-pro:export --codex
-To write back: add entries to .nemp/memories.json following existing format
+To update: save memories with /afmem:save in Claude Code, then /afmem-pro:export --codex
+To write back: add entries to memory/memories.json following existing format
 ```
 
 ---
 
 ### Example 2: Check Export Status
 
-User: `/nemp-pro:export --status`
+User: `/afmem-pro:export --status`
 
 ```
 Export Status
 
   AGENTS.md                        ✅ exists   Last updated: 2026-03-02 09:15
-  .cursor/rules/nemp-memory.mdc    ❌ not found
+  .cursor/rules/afmem-memory.mdc    ❌ not found
   .windsurfrules                   ✅ exists   Last updated: 2026-03-02 09:15
 
 Auto-export: Enabled → targets: codex, windsurf
@@ -481,43 +481,43 @@ Auto-export: Enabled → targets: codex, windsurf
 
 ### Example 3: Export All Targets
 
-User: `/nemp-pro:export --all`
+User: `/afmem-pro:export --all`
 
 Given 12 active memories (2 extinct skipped):
 
 ```
-✅ Nemp Pro — All exports complete
+✅ AF Memory Pro — All exports complete
 
    AGENTS.md                         ./AGENTS.md             ~1024 bytes
-   .cursor/rules/nemp-memory.mdc     ./.cursor/rules/...      ~1051 bytes
+   .cursor/rules/afmem-memory.mdc     ./.cursor/rules/...      ~1051 bytes
    .windsurfrules                    ./.windsurfrules          ~998 bytes
    CLAUDE.md                         ./CLAUDE.md             updated
 
    Memories exported: 12
    Extinct skipped:   2
 
-💡 All AI tools are now in sync with .nemp/memories.json.
-   Run /nemp-pro:export --all after any /nemp:save to refresh all targets.
+💡 All AI tools are now in sync with memory/memories.json.
+   Run /afmem-pro:export --all after any /afmem:save to refresh all targets.
 ```
 
 ---
 
 ### Example 4: No memories.json Found
 
-User: `/nemp-pro:export --codex`
+User: `/afmem-pro:export --codex`
 
 ```
-❌ No Nemp memories found. Run /nemp:init first.
+❌ No AF Memory memories found. Run /afmem:init first.
 
-   To initialize: /nemp:init
-   To save a memory: /nemp:save <key> <value>
+   To initialize: /afmem:init
+   To save a memory: /afmem:save <key> <value>
 ```
 
 ---
 
 ## Error Handling
 
-- **No .nemp/memories.json**: Show init prompt (see Step 2) and stop.
+- **No memory/memories.json**: Show init prompt (see Step 2) and stop.
 - **Empty memories after filtering extinct**: Export an empty file with only the header and footer lines. Inform user: `⚠️ All memories are extinct or no memories exist. Exported empty file.`
 - **Write permission error**: Report the OS error and suggest checking file permissions.
 - **Malformed memories.json (invalid JSON)**: Report: `❌ memories.json is not valid JSON. Check the file for syntax errors.` and stop.
@@ -538,15 +538,15 @@ User: `/nemp-pro:export --codex`
 
 **Directory creation for Cursor:** Always run `mkdir -p .cursor/rules` before writing the MDC file, even if it appears to already exist, to avoid path errors.
 
-**CLAUDE.md sync in --all:** Follow the same section-detection logic as `/nemp:export` — find and replace only the `## Project Context (via Nemp Memory)` section, preserving all other content.
+**CLAUDE.md sync in --all:** Follow the same section-detection logic as `/afmem:export` — find and replace only the `## Project Context (via AF Memory)` section, preserving all other content.
 
 ## Related Commands
 
-- `/nemp:export` — Export memories to CLAUDE.md (open-source, Claude Code only)
-- `/nemp:save` — Save or update a memory
-- `/nemp:init` — Auto-detect project stack and initialize memories
-- `/nemp:list` — View all memory keys and values
-- `/nemp:forget` — Remove a memory
-- `/nemp:cortex` — Memory intelligence layer (manages vitality and extinct state)
-- `/nemp-pro:auto-capture` — Toggle auto-capture of agent activity
-- `/nemp-pro:activity` — View or manage the captured activity log
+- `/afmem:export` — Export memories to CLAUDE.md (open-source, Claude Code only)
+- `/afmem:save` — Save or update a memory
+- `/afmem:init` — Auto-detect project stack and initialize memories
+- `/afmem:list` — View all memory keys and values
+- `/afmem:forget` — Remove a memory
+- `/afmem:cortex` — Memory intelligence layer (manages vitality and extinct state)
+- `/afmem-pro:auto-capture` — Toggle auto-capture of agent activity
+- `/afmem-pro:activity` — View or manage the captured activity log

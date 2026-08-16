@@ -2,8 +2,8 @@
 
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <td><img src="assets/logo/Nemp Logo.png" alt="Nemp Memory Logo" height="80"/></td>
-      <td><h1>&nbsp;Nemp Memory</h1></td>
+      <td><img src="assets/logo/AF Memory Logo.png" alt="AF Memory Logo" height="80"/></td>
+      <td><h1>&nbsp;AF Memory</h1></td>
     </tr>
   </table>
 
@@ -20,7 +20,7 @@
 
   <br/>
 
-  <img src="assets/images/Nemp banner 2.png" alt="Nemp Memory Banner" width="100%"/>
+  <img src="assets/images/AF Memory banner 2.png" alt="AF Memory Banner" width="100%"/>
 
 </div>
 
@@ -44,13 +44,13 @@ Claude Code forgets everything between sessions. You waste 15-20 minutes every d
 
 ---
 
-## Why Nemp Is Different
+## Why AF Memory Is Different
 
-**Nemp is stupidly simple:**
+**AF Memory is stupidly simple:**
 
 ```bash
-/plugin marketplace add https://github.com/SukinShetty/Nemp-memory
-/plugin install nemp
+/plugin marketplace add https://github.com/craigharclerode-cmd/af-memory
+/plugin install afmem
 # Done.
 ```
 
@@ -58,7 +58,7 @@ Claude Code forgets everything between sessions. You waste 15-20 minutes every d
 
 **Cross-platform:** Works on Claude Code, OpenClaw, and any AgentSkills-compatible platform. One memory store, multiple agents.
 
-| Feature | Other Plugins | Nemp |
+| Feature | Other Plugins | AF Memory |
 |---------|---------------|------|
 | **Setup** | 10+ steps | **2 commands** |
 | **Dependencies** | SQLite, Ollama, web servers | **None** |
@@ -80,30 +80,30 @@ Claude Code forgets everything between sessions. You waste 15-20 minutes every d
 
 | Feature | Description |
 |---------|-------------|
-| **Agent ID Tracking** | Every memory records which agent wrote it — `main`, `nemp-init`, `backend`, etc. |
-| **Access Logs** | All read/write/delete operations logged to `.nemp/access.log` with timestamps and agent names |
-| **`/nemp:log` Command** | View the full audit trail. Filter by agent, tail recent entries, or clear the log |
-| **Token Compression** | `/nemp:save` compresses values before storing — ~70% smaller, preserves all technical terms |
-| **`/nemp:init` Optimized** | Single bash scan, reads only `package.json`, writes all memories in one operation |
-| **MEMORY.md Index** | Auto-generated index at `.nemp/MEMORY.md` with agent attribution and quick overview |
+| **Agent ID Tracking** | Every memory records which agent wrote it — `main`, `afmem-init`, `backend`, etc. |
+| **Access Logs** | All read/write/delete operations logged to `memory/access.log` with timestamps and agent names |
+| **`/afmem:log` Command** | View the full audit trail. Filter by agent, tail recent entries, or clear the log |
+| **Token Compression** | `/afmem:save` compresses values before storing — ~70% smaller, preserves all technical terms |
+| **`/afmem:init` Optimized** | Single bash scan, reads only `package.json`, writes all memories in one operation |
+| **MEMORY.md Index** | Auto-generated index at `memory/MEMORY.md` with agent attribution and quick overview |
 
 ---
 
-## 6 Features That Set Nemp Apart
+## 6 Features That Set AF Memory Apart
 
 ### 1️⃣ Auto-Init: One Command Learns Everything
 
-**Unique to Nemp:** Auto-detects your entire stack in one command.
+**Unique to AF Memory:** Auto-detects your entire stack in one command.
 
 <p align="center">
-  <img src="assets/demos/nemp-init-demo-optimized.gif" alt="Auto-init demo" width="100%"/>
+  <img src="assets/demos/afmem-init-demo-optimized.gif" alt="Auto-init demo" width="100%"/>
 </p>
 
 ```bash
-/nemp:init
+/afmem:init
 ```
 
-That's it. Nemp scans your project and automatically detects:
+That's it. AF Memory scans your project and automatically detects:
 - Framework (Next.js, React, Vue, etc.)
 - Language & config (TypeScript, strict mode)
 - Database & ORM (Prisma, Drizzle, MongoDB)
@@ -136,17 +136,17 @@ Claude now knows your stack forever.
 
 ### 2️⃣ Smart Context: Find Memories Instantly
 
-**Unique to Nemp:** Semantic search that understands what you're looking for.
+**Unique to AF Memory:** Semantic search that understands what you're looking for.
 
 <p align="center">
-  <img src="assets/demos/nemp-context-demo.gif" alt="Smart context demo" width="100%"/>
+  <img src="assets/demos/afmem-context-demo.gif" alt="Smart context demo" width="100%"/>
 </p>
 
 ```bash
-/nemp:context auth
+/afmem:context auth
 ```
 
-Nemp doesn't just search for "auth" — it expands to:
+AF Memory doesn't just search for "auth" — it expands to:
 - authentication, login, session, jwt, oauth, nextauth, clerk, token, passport, credentials...
 
 **Example output:**
@@ -163,8 +163,8 @@ auth-middleware [KEY MATCH]
   Protects all /api routes except /auth/*
 
 Quick actions:
-/nemp:recall auth-provider    # View details
-/nemp:context database        # Search database
+/afmem:recall auth-provider    # View details
+/afmem:context database        # Search database
 ```
 
 **Why this matters:**
@@ -176,19 +176,19 @@ Quick actions:
 
 ### 3️⃣ Memory Suggestions: AI Suggests What to Save
 
-**Unique to Nemp:** Nemp watches your work and proactively suggests memories.
+**Unique to AF Memory:** AF Memory watches your work and proactively suggests memories.
 
 <p align="center">
-  <img src="assets/demos/nemp-suggest-demo-optimized.gif" alt="Memory suggestions demo" width="100%"/>
+  <img src="assets/demos/afmem-suggest-demo-optimized.gif" alt="Memory suggestions demo" width="100%"/>
 </p>
 
 ```bash
-/nemp:suggest
+/afmem:suggest
 ```
 
 **Example output:**
 ```
-NEMP MEMORY SUGGESTIONS
+AFMEM MEMORY SUGGESTIONS
 Based on your recent activity patterns:
 
 #1  auth-approach                              PRIORITY: HIGH
@@ -213,7 +213,7 @@ This pattern is worth remembering.
 - Time-based focus (30+ min sessions)
 
 **Why this matters:**
-- Nemp drafts memories FOR you
+- AF Memory drafts memories FOR you
 - Zero cognitive load
 - Captures patterns you'd miss
 
@@ -221,35 +221,35 @@ This pattern is worth remembering.
 
 ### 4️⃣ CLAUDE.md Auto-Sync: Set It and Forget It
 
-**Unique to Nemp:** Your CLAUDE.md updates itself every time you save a memory.
+**Unique to AF Memory:** Your CLAUDE.md updates itself every time you save a memory.
 
 ```bash
-/nemp:auto-sync on
+/afmem:auto-sync on
 ```
 
 That's it. From this point:
 
-- `/nemp:save` adds a memory → CLAUDE.md updates automatically
-- `/nemp:init` detects your stack → CLAUDE.md updates automatically
-- `/nemp:forget` removes a memory → CLAUDE.md updates automatically
+- `/afmem:save` adds a memory → CLAUDE.md updates automatically
+- `/afmem:init` detects your stack → CLAUDE.md updates automatically
+- `/afmem:forget` removes a memory → CLAUDE.md updates automatically
 
 You never manually edit the project context section of CLAUDE.md again.
 
 **What it looks like:**
 
 ```
-/nemp:save testing "test-gated success with pass@k evaluation"
+/afmem:save testing "test-gated success with pass@k evaluation"
 
 ✓ Memory saved: testing
   Value: "test-gated success with pass@k evaluation"
-  Location: .nemp/memories.json (project)
+  Location: memory/memories.json (project)
   Total memories: 12
   ✓ CLAUDE.md synced
 ```
 
 Your CLAUDE.md now has two parts:
-- **Top:** Your rules (written by you, never touched by Nemp)
-- **Bottom:** Project context (auto-generated by Nemp, always current)
+- **Top:** Your rules (written by you, never touched by AF Memory)
+- **Bottom:** Project context (auto-generated by AF Memory, always current)
 
 **Why this matters:**
 - Two commands on day 1. Zero commands after that.
@@ -258,24 +258,24 @@ Your CLAUDE.md now has two parts:
 
 ---
 
-### 5️⃣ Two-Way Sync: CLAUDE.md ↔ Nemp
+### 5️⃣ Two-Way Sync: CLAUDE.md ↔ AF Memory
 
-**Unique to Nemp:** Reads FROM your CLAUDE.md and writes BACK to it.
+**Unique to AF Memory:** Reads FROM your CLAUDE.md and writes BACK to it.
 
 ```bash
-/nemp:sync
+/afmem:sync
 ```
 
 **What it does:**
 
-**Direction 1** — Imports your manually written CLAUDE.md notes into Nemp. Now those notes become searchable with `/nemp:context`.
+**Direction 1** — Imports your manually written CLAUDE.md notes into AF Memory. Now those notes become searchable with `/afmem:context`.
 
-**Direction 2** — Checks your actual project files (package.json, config files) against what CLAUDE.md says. If something doesn't match, Nemp catches it.
+**Direction 2** — Checks your actual project files (package.json, config files) against what CLAUDE.md says. If something doesn't match, AF Memory catches it.
 
 **Example:**
 
 ```
-/nemp:sync
+/afmem:sync
 
 Imported from CLAUDE.md: 2 new memories
 ⚠️ Conflict: CLAUDE.md says Prisma, but package.json shows Drizzle
@@ -285,26 +285,26 @@ Total memories: 15
 
 **Why this matters:**
 - Catches outdated context before Claude uses wrong information
-- Already using CLAUDE.md? Nemp makes your existing notes searchable
+- Already using CLAUDE.md? AF Memory makes your existing notes searchable
 - Never worry about stale project context again
 
 ---
 
 ### 6️⃣ Export to CLAUDE.md: One Command, Full Context
 
-**Unique to Nemp:** Generates the project context section of CLAUDE.md from your saved memories.
+**Unique to AF Memory:** Generates the project context section of CLAUDE.md from your saved memories.
 
 ```bash
-/nemp:export
+/afmem:export
 ```
 
-Nemp reads all your saved memories, organizes them by category, and writes a clean project context section into CLAUDE.md.
+AF Memory reads all your saved memories, organizes them by category, and writes a clean project context section into CLAUDE.md.
 
 **Example output in CLAUDE.md:**
 
 ```markdown
-## Project Context (via Nemp Memory)
-> Auto-generated by Nemp Memory. Last updated: 2026-02-04 19:10
+## Project Context (via AF Memory)
+> Auto-generated by AF Memory. Last updated: 2026-02-04 19:10
 
 ### Tech Stack
 | Key | Value |
@@ -321,14 +321,14 @@ Nemp reads all your saved memories, organizes them by category, and writes a cle
 
 ---
 
-## Cross-Provider Memory (Nemp Pro)
+## Cross-Provider Memory (AF Memory Pro)
 
 **Work in Claude Code, Codex, Cursor, and Windsurf — same memory, everywhere.**
 
-Nemp Pro adds cross-provider export so your memories work in every AI coding tool. Save once in Claude Code, available everywhere.
+AF Memory Pro adds cross-provider export so your memories work in every AI coding tool. Save once in Claude Code, available everywhere.
 
 ```
-Claude Code <-> .nemp/memories.json <-> Nemp Pro Export
+Claude Code <-> memory/memories.json <-> AF Memory Pro Export
                                              |
                                              +-- AGENTS.md ---------> Codex CLI
                                              +-- .cursor/rules/ ----> Cursor
@@ -340,19 +340,19 @@ Claude Code <-> .nemp/memories.json <-> Nemp Pro Export
 **1. Export to your preferred tools:**
 
 ```bash
-/nemp-pro:export --codex      # Generate AGENTS.md for Codex CLI
-/nemp-pro:export --cursor     # Generate .cursor/rules/nemp-memory.mdc
-/nemp-pro:export --windsurf   # Generate .windsurfrules
-/nemp-pro:export --all        # Generate all three at once
+/afmem-pro:export --codex      # Generate AGENTS.md for Codex CLI
+/afmem-pro:export --cursor     # Generate .cursor/rules/afmem-memory.mdc
+/afmem-pro:export --windsurf   # Generate .windsurfrules
+/afmem-pro:export --all        # Generate all three at once
 ```
 
 **2. Enable auto-export (optional):**
 
 ```bash
-/nemp-pro:auto-export on
+/afmem-pro:auto-export on
 ```
 
-Now every `/nemp:save` automatically updates all export files. Set it once, forget it.
+Now every `/afmem:save` automatically updates all export files. Set it once, forget it.
 
 ### Provider-Specific Setup
 
@@ -367,9 +367,9 @@ Now every `/nemp:save` automatically updates all export files. Set it once, forg
 Edited memories in Codex? Import them back:
 
 ```bash
-/nemp-pro:import --codex      # Import changes from AGENTS.md
-/nemp-pro:import --cursor     # Import from Cursor rules
-/nemp-pro:import --auto       # Detect and import from all sources
+/afmem-pro:import --codex      # Import changes from AGENTS.md
+/afmem-pro:import --cursor     # Import from Cursor rules
+/afmem-pro:import --auto       # Detect and import from all sources
 ```
 
 The import command detects new entries, shows conflicts, and asks for confirmation before updating.
@@ -377,8 +377,8 @@ The import command detects new entries, shows conflicts, and asks for confirmati
 ### Export Status
 
 ```bash
-/nemp-pro:export --status     # Check which files exist and when they were last updated
-/nemp-pro:auto-export status  # Check auto-export configuration
+/afmem-pro:export --status     # Check which files exist and when they were last updated
+/afmem-pro:auto-export status  # Check auto-export configuration
 ```
 
 ---
@@ -389,10 +389,10 @@ The import command detects new entries, shows conflicts, and asks for confirmati
 
 ```bash
 # Step 1: Add the marketplace
-/plugin marketplace add https://github.com/SukinShetty/Nemp-memory
+/plugin marketplace add https://github.com/craigharclerode-cmd/af-memory
 
 # Step 2: Install the plugin
-/plugin install nemp
+/plugin install afmem
 ```
 
 ### Method 2: Windows Users (If Method 1 Fails)
@@ -401,10 +401,10 @@ Windows sometimes has issues with the marketplace command due to path handling. 
 
 ```bash
 # Use the full GitHub URL directly
-/plugin marketplace add https://github.com/SukinShetty/Nemp-memory.git
+/plugin marketplace add https://github.com/craigharclerode-cmd/af-memory.git
 
 # Then install
-/plugin install nemp
+/plugin install afmem
 ```
 
 If that still fails, use Method 3 below.
@@ -418,19 +418,19 @@ For users who encounter persistent marketplace issues:
 cd ~/.claude/plugins/marketplaces
 
 # Step 2: Clone the repository directly
-git clone https://github.com/SukinShetty/Nemp-memory.git nemp-memory
+git clone https://github.com/craigharclerode-cmd/af-memory.git afmem-memory
 
 # Step 3: Restart Claude Code
 exit
 claude
 
 # Step 4: Install the plugin
-/plugin install nemp
+/plugin install afmem
 ```
 
 **Verify it's working:**
 ```bash
-/nemp:list
+/afmem:list
 ```
 
 You should see "No memories saved yet" or a list of your memories.
@@ -450,17 +450,17 @@ claude
 **Step 2: Verify installation**
 ```bash
 /plugin list
-# Should show: nemp@nemp-memory
+# Should show: afmem@afmem-memory
 ```
 
 **Step 3: Clean reinstall**
 ```bash
-/plugin uninstall nemp
-/plugin marketplace remove nemp-memory
+/plugin uninstall afmem
+/plugin marketplace remove afmem-memory
 exit
 claude
-/plugin marketplace add https://github.com/SukinShetty/Nemp-memory
-/plugin install nemp
+/plugin marketplace add https://github.com/craigharclerode-cmd/af-memory
+/plugin install afmem
 exit
 claude
 ```
@@ -490,7 +490,7 @@ Error: EPERM: operation not permitted, open 'C:\Users\...'
 
 **Step 4:** Verify it worked
 ```bash
-/nemp:list
+/afmem:list
 # Should show your memories without errors
 ```
 
@@ -498,9 +498,9 @@ Error: EPERM: operation not permitted, open 'C:\Users\...'
 
 ### Commands Not Recognized
 
-If you type `/nemp:save` and nothing happens, or you see:
+If you type `/afmem:save` and nothing happens, or you see:
 ```
-Unknown command: nemp:save
+Unknown command: afmem:save
 ```
 
 **What's happening:** The plugin isn't loaded or registered properly.
@@ -511,12 +511,12 @@ Unknown command: nemp:save
 ```bash
 /plugin list
 ```
-You should see `nemp` in the list. If not, continue to Step 2.
+You should see `afmem` in the list. If not, continue to Step 2.
 
 **Step 2:** Reinstall the plugin
 ```bash
-/plugin marketplace add https://github.com/SukinShetty/Nemp-memory
-/plugin install nemp
+/plugin marketplace add https://github.com/craigharclerode-cmd/af-memory
+/plugin install afmem
 ```
 
 **Step 3:** Restart Claude Code (required!)
@@ -527,18 +527,18 @@ claude
 
 **Step 4:** Verify commands are available
 ```bash
-/nemp:list
+/afmem:list
 # Should work now
 ```
 
 **Still not working?** Try a clean reinstall:
 ```bash
-/plugin uninstall nemp
-/plugin marketplace remove nemp-memory
+/plugin uninstall afmem
+/plugin marketplace remove afmem-memory
 exit
 claude
-/plugin marketplace add https://github.com/SukinShetty/Nemp-memory
-/plugin install nemp
+/plugin marketplace add https://github.com/craigharclerode-cmd/af-memory
+/plugin install afmem
 exit
 claude
 ```
@@ -576,7 +576,7 @@ If Git isn't installed, download it from [git-scm.com](https://git-scm.com/downl
 
 **Step 3:** Try cloning manually to test access
 ```bash
-git clone https://github.com/SukinShetty/Nemp-memory.git ~/test-nemp
+git clone https://github.com/craigharclerode-cmd/af-memory.git ~/test-afmem
 ```
 
 If this fails, you may have:
@@ -591,8 +591,8 @@ git config --global http.proxy http://your-proxy:port
 
 **Step 5:** Once Git works, retry installation
 ```bash
-/plugin marketplace add https://github.com/SukinShetty/Nemp-memory
-/plugin install nemp
+/plugin marketplace add https://github.com/craigharclerode-cmd/af-memory
+/plugin install afmem
 exit
 claude
 ```
@@ -604,9 +604,9 @@ claude
 If the plugin appears installed but commands don't work:
 ```bash
 /plugin list
-# Shows: nemp@nemp-memory ✓
+# Shows: afmem@afmem-memory ✓
 
-/nemp:list
+/afmem:list
 # But this does nothing or shows error
 ```
 
@@ -617,10 +617,10 @@ If the plugin appears installed but commands don't work:
 **Step 1:** Clear the plugin cache
 ```bash
 # On Mac/Linux:
-rm -rf ~/.claude/plugins/cache/nemp*
+rm -rf ~/.claude/plugins/cache/afmem*
 
 # On Windows (PowerShell):
-Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\plugins\cache\nemp*"
+Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\plugins\cache\afmem*"
 ```
 
 **Step 2:** Restart Claude Code
@@ -631,27 +631,27 @@ claude
 
 **Step 3:** If still not working, check for corrupted installation
 ```bash
-/plugin uninstall nemp
-/plugin marketplace remove nemp-memory
+/plugin uninstall afmem
+/plugin marketplace remove afmem-memory
 ```
 
 **Step 4:** Clear all plugin data and reinstall fresh
 ```bash
 # On Mac/Linux:
-rm -rf ~/.claude/plugins/nemp*
-rm -rf ~/.claude/marketplace/nemp*
+rm -rf ~/.claude/plugins/afmem*
+rm -rf ~/.claude/marketplace/afmem*
 
 # On Windows (PowerShell):
-Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\plugins\nemp*"
-Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\marketplace\nemp*"
+Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\plugins\afmem*"
+Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\marketplace\afmem*"
 ```
 
 **Step 5:** Restart and reinstall
 ```bash
 exit
 claude
-/plugin marketplace add https://github.com/SukinShetty/Nemp-memory
-/plugin install nemp
+/plugin marketplace add https://github.com/craigharclerode-cmd/af-memory
+/plugin install afmem
 exit
 claude
 ```
@@ -659,38 +659,38 @@ claude
 **Step 6:** Verify everything works
 ```bash
 /plugin list
-# Should show: nemp@nemp-memory
+# Should show: afmem@afmem-memory
 
-/nemp:list
+/afmem:list
 # Should show your memories (or empty list if new install)
 ```
 
 ---
 
-### Uninstalling Nemp
+### Uninstalling AF Memory
 
 **Remove plugin:**
 ```bash
-/plugin uninstall nemp
-/plugin marketplace remove nemp-memory
+/plugin uninstall afmem
+/plugin marketplace remove afmem-memory
 ```
 
 **Delete all data (optional):**
 ```bash
 # Delete project memories
-rm -rf .nemp
+rm -rf .afmem
 
 # Delete global memories
-rm -rf ~/.nemp
+rm -rf ~/.afmem
 ```
 
-**Note:** Deleting `.nemp` folders removes ALL saved memories permanently.
+**Note:** Deleting `.afmem` folders removes ALL saved memories permanently.
 
 ### Still having issues?
 
 1. Check Claude Code version (requires v2.0+)
-2. Clear cache: `rm -rf ~/.claude/plugins/cache/nemp*`
-3. [Open an issue on GitHub](https://github.com/SukinShetty/Nemp-memory/issues)
+2. Clear cache: `rm -rf ~/.claude/plugins/cache/afmem*`
+3. [Open an issue on GitHub](https://github.com/craigharclerode-cmd/af-memory/issues)
 
 ---
 
@@ -698,67 +698,67 @@ rm -rf ~/.nemp
 
 ```bash
 # Get Started
-/nemp:init                    # Auto-detect stack (unique!)
+/afmem:init                    # Auto-detect stack (unique!)
 
 # Basic Memory
-/nemp:save <key> <value>      # Save memory
-/nemp:recall <key>            # Get memory
-/nemp:list                    # List all
-/nemp:forget <key>            # Delete memory
+/afmem:save <key> <value>      # Save memory
+/afmem:recall <key>            # Get memory
+/afmem:list                    # List all
+/afmem:forget <key>            # Delete memory
 
 # Smart Features
-/nemp:context <keyword>       # Smart search (unique!)
-/nemp:suggest                 # Get AI suggestions (unique!)
-/nemp:suggest --auto          # Auto-save HIGH priority
+/afmem:context <keyword>       # Smart search (unique!)
+/afmem:suggest                 # Get AI suggestions (unique!)
+/afmem:suggest --auto          # Auto-save HIGH priority
 
 # CLAUDE.md Integration
-/nemp:auto-sync on/off        # Auto-update CLAUDE.md (game changer!)
-/nemp:sync                    # Two-way sync with CLAUDE.md
-/nemp:export                  # Generate CLAUDE.md from memories
+/afmem:auto-sync on/off        # Auto-update CLAUDE.md (game changer!)
+/afmem:sync                    # Two-way sync with CLAUDE.md
+/afmem:export                  # Generate CLAUDE.md from memories
 
 # Audit Trail (v0.2.0)
-/nemp:log                     # View access log (reads, writes, deletes)
-/nemp:log --agent backend     # Filter by agent
-/nemp:log --tail 50           # Show last 50 entries
+/afmem:log                     # View access log (reads, writes, deletes)
+/afmem:log --agent backend     # Filter by agent
+/afmem:log --tail 50           # Show last 50 entries
 
 # Global (Cross-Project)
-/nemp:save-global <key> <value>
-/nemp:list-global
+/afmem:save-global <key> <value>
+/afmem:list-global
 
 # Activity (Optional)
-/nemp:auto-capture on/off     # Enable tracking
-/nemp:activity                # View log
+/afmem:auto-capture on/off     # Enable tracking
+/afmem:activity                # View log
 ```
 
 ---
 
 ## Works on OpenClaw
 
-Nemp Memory runs natively as an OpenClaw skill. Same persistent memory, same commands, different platform.
+AF Memory runs natively as an OpenClaw skill. Same persistent memory, same commands, different platform.
 
 <p align="center">
-  <img src="assets/images/nemp-openclaw-telegram.jpeg" alt="Nemp running on OpenClaw via Telegram" width="400"/>
+  <img src="assets/images/afmem-openclaw-telegram.jpeg" alt="AF Memory running on OpenClaw via Telegram" width="400"/>
 </p>
 
 ### Setup (30 seconds)
 
-**1. Copy Nemp into OpenClaw's workspace skills:**
+**1. Copy AF Memory into OpenClaw's workspace skills:**
 
 ```bash
-git clone https://github.com/SukinShetty/Nemp-memory.git <your-openclaw-workspace>/skills/nemp-memory
+git clone https://github.com/craigharclerode-cmd/af-memory.git <your-openclaw-workspace>/skills/afmem-memory
 ```
 
 Default workspace path:
-- **Windows:** `C:\Users\<you>\.openclaw\workspace\skills\nemp-memory`
-- **macOS/Linux:** `~/.openclaw/workspace/skills/nemp-memory`
+- **Windows:** `C:\Users\<you>\.openclaw\workspace\skills\afmem-memory`
+- **macOS/Linux:** `~/.openclaw/workspace/skills/afmem-memory`
 
 **2. Add the SKILL.md** (required for OpenClaw to recognize the skill):
 
-The `SKILL.md` file is included in the repo. If it's missing, create one at the root of the nemp-memory folder:
+The `SKILL.md` file is included in the repo. If it's missing, create one at the root of the afmem-memory folder:
 
 ```yaml
 ---
-name: nemp-memory
+name: afmem-memory
 description: Persistent local memory for AI agents. Save, recall, and search project decisions as local JSON. Zero cloud, zero infrastructure.
 metadata: {"openclaw": {"always": true}}
 ---
@@ -767,18 +767,18 @@ metadata: {"openclaw": {"always": true}}
 **3. Restart OpenClaw** and verify:
 
 ```
-Do you see nemp-memory in your skills?
+Do you see afmem-memory in your skills?
 ```
 
 ### That's it.
 
 Save memories from Claude Code → recall them from OpenClaw.
 Save from OpenClaw → recall from Claude Code.
-Same `.nemp/memories.json`. Same commands. Zero cloud.
+Same `memory/memories.json`. Same commands. Zero cloud.
 
 ### Why this works
 
-OpenClaw uses the same [AgentSkills](https://agentskills.io) standard as Claude Code. Nemp's memory commands are plain file operations on local JSON — no platform-specific APIs. If your agent can read and write files, Nemp works.
+OpenClaw uses the same [AgentSkills](https://agentskills.io) standard as Claude Code. AF Memory's memory commands are plain file operations on local JSON — no platform-specific APIs. If your agent can read and write files, AF Memory works.
 
 ---
 
@@ -787,7 +787,7 @@ OpenClaw uses the same [AgentSkills](https://agentskills.io) standard as Claude 
 ### Onboarding New Developers
 ```bash
 # Day 1, new dev runs:
-/nemp:init
+/afmem:init
 
 # Claude instantly knows:
 - Tech stack
@@ -804,12 +804,12 @@ Time saved: 2 hours -> 2 seconds
 ```bash
 # Project A
 cd ~/client-a
-/nemp:recall stack
+/afmem:recall stack
 -> "Next.js, Stripe, PostgreSQL"
 
 # Project B
 cd ~/client-b
-/nemp:recall stack
+/afmem:recall stack
 -> "React, Supabase, Tailwind"
 
 Each project remembers itself.
@@ -819,10 +819,10 @@ Each project remembers itself.
 
 ### Decision History
 ```bash
-/nemp:save api-design "RESTful not GraphQL - team decision 2024-01-15"
+/afmem:save api-design "RESTful not GraphQL - team decision 2024-01-15"
 
 # 3 months later:
-/nemp:context api
+/afmem:context api
 -> Instant recall, no Slack archaeology
 ```
 
@@ -833,14 +833,14 @@ Each project remembers itself.
 **Everything local. No cloud. No tracking.**
 
 ```
-.nemp/
+memory/
   memories.json          # Your project memories
   access.log             # Read/write/delete audit trail
   config.json            # Plugin configuration
   MEMORY.md              # Auto-generated memory index
   activity.log           # Activity tracking (optional)
 
-~/.nemp/
+~/memory/
   memories.json          # Global memories
 ```
 
@@ -851,13 +851,13 @@ Each project remembers itself.
   "value": "NextAuth.js with JWT",
   "created": "2026-01-31T12:00:00Z",
   "updated": "2026-02-11T14:00:00Z",
-  "agent_id": "nemp-init"
+  "agent_id": "afmem-init"
 }
 ```
 
 **You own your data. Delete anytime:**
 ```bash
-rm -rf .nemp
+rm -rf .afmem
 ```
 
 **Why privacy matters:**
@@ -866,7 +866,7 @@ rm -rf .nemp
 - Competitive advantages in your architecture
 - Compliance requirements (HIPAA, SOC2, etc.)
 
-**Nemp keeps it all on your machine. Always.**
+**AF Memory keeps it all on your machine. Always.**
 
 ---
 
@@ -885,15 +885,15 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## Support
 
-- **GitHub Issues:** [Report bugs or request features](https://github.com/SukinShetty/Nemp-memory/issues)
-- **Email:** [contact@nemp.dev](mailto:contact@nemp.dev)
+- **GitHub Issues:** [Report bugs or request features](https://github.com/craigharclerode-cmd/af-memory/issues)
+- **Email:** [craig.harclerode@gmail.com](mailto:craig.harclerode@gmail.com)
 - **Discord:** Coming Soon
 
 ---
 
 ## License
 
-MIT © 2026 [Sukin Shetty](https://github.com/SukinShetty)
+MIT © 2026 [Craig Harclerode](https://github.com/SukinShetty)
 
 Open source. Free forever. Use however you want.
 
@@ -901,28 +901,28 @@ Open source. Free forever. Use however you want.
 
 ## Support This Project
 
-**Love Nemp? Here's how you can help:**
+**Love AF Memory? Here's how you can help:**
 
-⭐ **[Star this repo](https://github.com/SukinShetty/Nemp-memory)** – Helps other developers discover Nemp
-🐛 **[Report bugs](https://github.com/SukinShetty/Nemp-memory/issues)** – Make Nemp better for everyone
-💡 **Share your use case** – Tweet [@sukin_s](https://x.com/sukin_s) with #NempMemory
+⭐ **[Star this repo](https://github.com/craigharclerode-cmd/af-memory)** – Helps other developers discover AF Memory
+🐛 **[Report bugs](https://github.com/craigharclerode-cmd/af-memory/issues)** – Make AF Memory better for everyone
+💡 **Share your use case** – Tweet [@sukin_s](https://x.com/sukin_s) with #AF MemoryMemory
 🔀 **[Contribute code](CONTRIBUTING.md)** – See contributing guidelines
 
 **Join the community:**
 - 💬 Discord: *Coming Soon*
 - 🐦 Twitter: [@sukin_s](https://x.com/sukin_s)
-- 💼 LinkedIn: [Sukin Shetty](https://linkedin.com/in/sukinshetty-1984)
+- 💼 LinkedIn: [Craig Harclerode](https://linkedin.com/in/sukinshetty-1984)
 
 **Every star motivates us to build better features!**
 
 ---
 
 <div align="center">
-  <p>Built with care by <a href="https://www.linkedin.com/in/sukinshetty-1984/">Sukin Shetty</a></p>
+  <p>Built with care by <a href="https://www.linkedin.com/in/sukinshetty-1984/">Craig Harclerode</a></p>
   <p>
     <a href="https://www.linkedin.com/in/sukinshetty-1984/">LinkedIn</a> •
     <a href="https://x.com/sukin_s">X/Twitter</a> •
-    <a href="mailto:contact@nemp.dev">contact@nemp.dev</a>
+    <a href="mailto:craig.harclerode@gmail.com">craig.harclerode@gmail.com</a>
   </p>
   <br>
   <p><strong>Stop repeating yourself. Start coding faster.</strong></p>

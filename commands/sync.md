@@ -1,28 +1,28 @@
 ---
-description: "Two-way sync between Nemp Memory and CLAUDE.md"
+description: "Two-way sync between AF Memory and CLAUDE.md"
 argument-hint: "[--import-only | --export-only | --check]"
 ---
 
-# /nemp:sync
+# /afmem:sync
 
-Two-way bridge between Nemp Memory and CLAUDE.md. Import user-written context from CLAUDE.md into Nemp, detect conflicts with actual project state, and update the Nemp section.
+Two-way bridge between AF Memory and CLAUDE.md. Import user-written context from CLAUDE.md into AF Memory, detect conflicts with actual project state, and update the AF Memory section.
 
 ## Usage
 ```
-/nemp:sync              # Full two-way sync
-/nemp:sync --import-only # Only read from CLAUDE.md into Nemp, don't write back
-/nemp:sync --export-only # Same as /nemp:export
-/nemp:sync --check       # Only detect conflicts, don't change anything
+/afmem:sync              # Full two-way sync
+/afmem:sync --import-only # Only read from CLAUDE.md into AF Memory, don't write back
+/afmem:sync --export-only # Same as /afmem:export
+/afmem:sync --check       # Only detect conflicts, don't change anything
 ```
 
 ## Arguments
-- `--import-only` (optional): Only import from CLAUDE.md to Nemp memories, skip export
-- `--export-only` (optional): Only export Nemp memories to CLAUDE.md (same as /nemp:export)
+- `--import-only` (optional): Only import from CLAUDE.md to AF Memory memories, skip export
+- `--export-only` (optional): Only export AF Memory memories to CLAUDE.md (same as /afmem:export)
 - `--check` (optional): Dry run - detect conflicts without making any changes
 
 ## Instructions
 
-When the user invokes `/nemp:sync`, follow these steps:
+When the user invokes `/afmem:sync`, follow these steps:
 
 ### Step 1: Parse Arguments
 
@@ -45,21 +45,21 @@ If CLAUDE.md doesn't exist:
 ⚠️ No CLAUDE.md found.
 
 Nothing to import. You can:
-  /nemp:export     - Create CLAUDE.md from Nemp memories
-  /nemp:init       - Auto-detect project stack first
+  /afmem:export     - Create CLAUDE.md from AF Memory memories
+  /afmem:init       - Auto-detect project stack first
 ```
 
 ### Step 3: Parse CLAUDE.md Content
 
 Split CLAUDE.md into two parts:
 
-**Nemp Section (SKIP):**
-- Starts with: `## Project Context (via Nemp Memory)`
+**AF Memory Section (SKIP):**
+- Starts with: `## Project Context (via AF Memory)`
 - Ends at: next `## ` heading, or `---` on its own line, or end of file
-- This is Nemp's own output — do NOT re-import it
+- This is AF Memory's own output — do NOT re-import it
 
 **User Content (IMPORT):**
-- Everything OUTSIDE the Nemp section
+- Everything OUTSIDE the AF Memory section
 - This includes manually written context, rules, preferences, architecture notes
 
 ### Step 4: Extract Importable Context
@@ -86,17 +86,17 @@ Scan the user content for importable information. Look for patterns like:
 3. Look for bullet lists that describe project aspects
 4. Look for code blocks with configuration hints
 
-### Step 5: Load Existing Nemp Memories
+### Step 5: Load Existing AF Memory Memories
 
 ```bash
-[ -f ".nemp/memories.json" ] && cat .nemp/memories.json || echo "{}"
+[ -f "memory/memories.json" ] && cat memory/memories.json || echo "{}"
 ```
 
 ### Step 6: Import New Memories
 
 For each piece of context extracted from CLAUDE.md:
 
-1. **Check for duplicates**: If a memory with the same key already exists in `.nemp/memories.json`, SKIP it
+1. **Check for duplicates**: If a memory with the same key already exists in `memory/memories.json`, SKIP it
 2. **Create new memory**: If the key doesn't exist, create it with:
    ```json
    {
@@ -137,7 +137,7 @@ Extract actual values from package.json:
 
 Compare three sources for conflicts:
 1. **CLAUDE.md content** (user-written)
-2. **Nemp memories** (stored in .nemp/memories.json)
+2. **AF Memory memories** (stored in memory/memories.json)
 3. **Actual project state** (from package.json, config files)
 
 **Conflict detection rules:**
@@ -161,16 +161,16 @@ Compare three sources for conflicts:
 │ CLAUDE.md says:     Prisma ORM                              │
 │ package.json shows: drizzle-orm ^0.30.0                     │
 │                                                             │
-│ Action needed: Update CLAUDE.md or Nemp memory              │
+│ Action needed: Update CLAUDE.md or AF Memory              │
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
 │ CONFLICT 2: React Version                                   │
 ├─────────────────────────────────────────────────────────────┤
-│ Nemp memory says:   React 18                                │
+│ AF Memory says:   React 18                                │
 │ package.json shows: react ^19.0.0                           │
 │                                                             │
-│ Action needed: Run /nemp:save framework to update           │
+│ Action needed: Run /afmem:save framework to update           │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -191,7 +191,7 @@ Would import from CLAUDE.md:
   • architecture: "Monorepo with Turborepo"
   • conventions: "Use server components by default"
 
-Would skip (already in Nemp):
+Would skip (already in AF Memory):
   • stack
   • database
 
@@ -199,7 +199,7 @@ Conflicts detected: 2
   • Database: CLAUDE.md says Prisma, package.json shows Drizzle
   • React: Memory says 18, package.json shows 19
 
-No changes made. Run /nemp:sync to apply.
+No changes made. Run /afmem:sync to apply.
 ```
 
 ### Step 10: Handle --import-only Flag
@@ -208,30 +208,30 @@ If `--import-only` flag is provided:
 - Import new memories from CLAUDE.md
 - Skip conflict detection (or show as warnings)
 - Do NOT update CLAUDE.md
-- Save memories to `.nemp/memories.json`
+- Save memories to `memory/memories.json`
 
 ### Step 11: Handle --export-only Flag
 
 If `--export-only` flag is provided:
 - Skip import step
 - Skip conflict detection
-- Export current Nemp memories to CLAUDE.md
-- Same behavior as `/nemp:export`
+- Export current AF Memory memories to CLAUDE.md
+- Same behavior as `/afmem:export`
 
 ### Step 12: Update CLAUDE.md (Full Sync)
 
-After handling imports and showing conflicts, update the Nemp section in CLAUDE.md:
+After handling imports and showing conflicts, update the AF Memory section in CLAUDE.md:
 
-1. **Preserve user content**: Keep everything outside the Nemp section exactly as-is
-2. **Find Nemp section**: Look for `## Project Context (via Nemp Memory)`
-3. **Replace Nemp section**: Generate new content from current memories
+1. **Preserve user content**: Keep everything outside the AF Memory section exactly as-is
+2. **Find AF Memory section**: Look for `## Project Context (via AF Memory)`
+3. **Replace AF Memory section**: Generate new content from current memories
 4. **Write back**: Save the updated CLAUDE.md
 
-**Generated Nemp section format:**
+**Generated AF Memory section format:**
 ```markdown
-## Project Context (via Nemp Memory)
+## Project Context (via AF Memory)
 
-> Auto-generated by Nemp Memory. Last updated: [YYYY-MM-DD HH:MM]
+> Auto-generated by AF Memory. Last updated: [YYYY-MM-DD HH:MM]
 
 ### Tech Stack
 
@@ -266,10 +266,10 @@ Group memories by:
 
 ### Step 13: Write Updated Memories
 
-Save the updated memories to `.nemp/memories.json`:
+Save the updated memories to `memory/memories.json`:
 
 ```bash
-mkdir -p .nemp
+mkdir -p .afmem
 ```
 
 Use the Write tool to save the JSON file.
@@ -279,7 +279,7 @@ Use the Write tool to save the JSON file.
 Display a complete summary:
 
 ```
-✅ Nemp Sync Complete
+✅ AF Memory Sync Complete
 
 ┌─────────────────────────────────────────────────────────────┐
 │ SUMMARY                                                     │
@@ -301,16 +301,16 @@ Display a complete summary:
 └─────────────────────────────────────────────────────────────┘
 
 💡 Tips:
-  • Fix conflicts with: /nemp:save <key> <correct-value>
-  • View all memories: /nemp:list
-  • Re-run after fixes: /nemp:sync --check
+  • Fix conflicts with: /afmem:save <key> <correct-value>
+  • View all memories: /afmem:list
+  • Re-run after fixes: /afmem:sync --check
 ```
 
 ## Examples
 
 ### Example 1: Full Sync
 
-User: `/nemp:sync`
+User: `/afmem:sync`
 
 Given CLAUDE.md:
 ```markdown
@@ -320,8 +320,8 @@ Given CLAUDE.md:
 We use a monorepo structure with Turborepo.
 API routes follow REST conventions.
 
-## Project Context (via Nemp Memory)
-> Auto-generated by Nemp Memory. Last updated: 2024-01-15
+## Project Context (via AF Memory)
+> Auto-generated by AF Memory. Last updated: 2024-01-15
 
 | Key | Value |
 |-----|-------|
@@ -337,22 +337,22 @@ And package.json shows `drizzle-orm` instead of `prisma`.
 
 Response:
 ```
-🔄 Syncing Nemp Memory with CLAUDE.md...
+🔄 Syncing AF Memory with CLAUDE.md...
 
 📥 Importing from CLAUDE.md:
   ✓ architecture: "Monorepo structure with Turborepo"
   ✓ api-style: "REST conventions"
-  ○ Skipped Nemp section (auto-generated)
+  ○ Skipped AF Memory section (auto-generated)
 
 ⚠️ Conflicts Detected
 
 ┌─────────────────────────────────────────────────────────────┐
 │ CONFLICT: Database/ORM                                      │
 ├─────────────────────────────────────────────────────────────┤
-│ Nemp memory says:   Prisma                                  │
+│ AF Memory says:   Prisma                                  │
 │ package.json shows: drizzle-orm                             │
 │                                                             │
-│ Fix with: /nemp:save database Drizzle ORM                   │
+│ Fix with: /afmem:save database Drizzle ORM                   │
 └─────────────────────────────────────────────────────────────┘
 
 📤 Updated CLAUDE.md with latest memories
@@ -363,7 +363,7 @@ Response:
 
 ### Example 2: Check Only
 
-User: `/nemp:sync --check`
+User: `/afmem:sync --check`
 
 ```
 🔍 Sync Check (dry run)
@@ -379,7 +379,7 @@ No changes made.
 
 ### Example 3: Import Only
 
-User: `/nemp:sync --import-only`
+User: `/afmem:sync --import-only`
 
 ```
 📥 Importing from CLAUDE.md...
@@ -394,16 +394,16 @@ Skipped (already exists):
 ✅ Import complete. 2 new memories saved.
 
 Note: CLAUDE.md was not modified.
-Run /nemp:sync to update CLAUDE.md with all memories.
+Run /afmem:sync to update CLAUDE.md with all memories.
 ```
 
 ## Error Handling
 
-- **No CLAUDE.md**: Prompt to create one with `/nemp:export`
+- **No CLAUDE.md**: Prompt to create one with `/afmem:export`
 - **No memories.json**: Initialize empty memories
 - **Parse errors**: Report the specific issue and line number if possible
 - **Write permission**: Report error and suggest checking permissions
-- **Empty user content**: Inform user there's nothing to import outside Nemp section
+- **Empty user content**: Inform user there's nothing to import outside AF Memory section
 
 ## Conflict Resolution Tips
 
@@ -413,19 +413,19 @@ After detecting conflicts, suggest specific commands:
 💡 To resolve conflicts:
 
   Database mismatch:
-    /nemp:save database Drizzle ORM with PostgreSQL
+    /afmem:save database Drizzle ORM with PostgreSQL
 
   Framework version:
-    /nemp:save framework Next.js 15 with App Router
+    /afmem:save framework Next.js 15 with App Router
 
   Then re-run:
-    /nemp:sync --check
+    /afmem:sync --check
 ```
 
 ## Related Commands
 
-- `/nemp:export` - Export memories to CLAUDE.md (same as --export-only)
-- `/nemp:init` - Auto-detect project stack
-- `/nemp:save` - Manually save a memory
-- `/nemp:list` - View all memories
-- `/nemp:recall` - Recall a specific memory
+- `/afmem:export` - Export memories to CLAUDE.md (same as --export-only)
+- `/afmem:init` - Auto-detect project stack
+- `/afmem:save` - Manually save a memory
+- `/afmem:list` - View all memories
+- `/afmem:recall` - Recall a specific memory

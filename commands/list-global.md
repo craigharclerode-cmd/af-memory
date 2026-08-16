@@ -3,24 +3,24 @@ description: "List all global memories"
 argument-hint: ""
 ---
 
-# /nemp:list-global
+# /afmem:list-global
 
 List all memories saved in global storage.
 
 ## Usage
 ```
-/nemp:list-global
+/afmem:list-global
 ```
 
 ## Instructions
 
-When the user invokes `/nemp:list-global`, follow these steps:
+When the user invokes `/afmem:list-global`, follow these steps:
 
 ### 1. Load Global Memories
 
 ```bash
-if [ -f "$HOME/.nemp/memories.json" ]; then
-  cat "$HOME/.nemp/memories.json"
+if [ -f "$HOME/memory/memories.json" ]; then
+  cat "$HOME/memory/memories.json"
 else
   echo '{"memories":[]}'
 fi
@@ -31,7 +31,7 @@ fi
 Display global memories in a clean table format:
 
 ```
-Global Memory Index (~/.nemp/memories.json)
+Global Memory Index (~/memory/memories.json)
 
   KEY                     UPDATED          PREVIEW
   preferred-editor        2024-01-15       VS Code with Vim keybindings...
@@ -45,17 +45,17 @@ Total: 3 global memories
 
 If no global memories exist:
 ```
-Global Memory Index (~/.nemp/memories.json)
+Global Memory Index (~/memory/memories.json)
 
 No global memories saved yet.
 
 Get started:
-  /nemp:save-global <key> <value>  - Save your first global memory
+  /afmem:save-global <key> <value>  - Save your first global memory
 
 Examples:
-  /nemp:save-global preferred-editor VS Code with Vim keybindings
-  /nemp:save-global git-workflow Always rebase, never merge commits
-  /nemp:save-global coding-style 4 spaces indentation, trailing commas
+  /afmem:save-global preferred-editor VS Code with Vim keybindings
+  /afmem:save-global git-workflow Always rebase, never merge commits
+  /afmem:save-global coding-style 4 spaces indentation, trailing commas
 
 Global memories are available across ALL projects.
 ```
@@ -71,11 +71,11 @@ Default sort: by `updated` date (most recent first)
 
 ## Tips to Show User
 After listing, remind user:
-- Use `/nemp:recall-global <key>` to see full memory content
-- Use `/nemp:forget-global <key>` to delete a global memory
-- Use `/nemp:save-global <key> <new-value>` to update an existing memory
-- Use `/nemp:list` to see both project AND global memories
+- Use `/afmem:recall-global <key>` to see full memory content
+- Use `/afmem:forget-global <key>` to delete a global memory
+- Use `/afmem:save-global <key> <new-value>` to update an existing memory
+- Use `/afmem:list` to see both project AND global memories
 
-## Difference from /nemp:list
-- `/nemp:list-global` - Shows ONLY global memories
-- `/nemp:list` - Shows BOTH project and global memories in separate sections
+## Difference from /afmem:list
+- `/afmem:list-global` - Shows ONLY global memories
+- `/afmem:list` - Shows BOTH project and global memories in separate sections

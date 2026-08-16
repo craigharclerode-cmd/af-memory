@@ -1,19 +1,19 @@
-# Nemp Memory Plugin Sync Script
+# AF Memory Plugin Sync Script
 # Syncs development files to BOTH Claude Code marketplace and cache folders
 
-$SourceCommands = "C:\Users\SukinShetty\Nemp-memory\commands"
-$SourceHooks = "C:\Users\SukinShetty\Nemp-memory\.claude-plugin\hooks"
-$SourcePluginJson = "C:\Users\SukinShetty\Nemp-memory\.claude-plugin\plugin.json"
+$SourceCommands = "C:\Users\SukinShetty\AF Memory-memory\commands"
+$SourceHooks = "C:\Users\SukinShetty\AF Memory-memory\.claude-plugin\hooks"
+$SourcePluginJson = "C:\Users\SukinShetty\AF Memory-memory\.claude-plugin\plugin.json"
 
 # Destination folders
-$MarketplaceCommands = "C:\Users\SukinShetty\.claude\plugins\marketplaces\nemp-memory\commands"
-$MarketplaceHooks = "C:\Users\SukinShetty\.claude\plugins\marketplaces\nemp-memory\.claude-plugin\hooks"
-$MarketplacePlugin = "C:\Users\SukinShetty\.claude\plugins\marketplaces\nemp-memory\.claude-plugin\plugin.json"
-$CacheCommands = "C:\Users\SukinShetty\.claude\plugins\cache\nemp-memory\nemp\0.3.0\commands"
-$CacheHooks = "C:\Users\SukinShetty\.claude\plugins\cache\nemp-memory\nemp\0.3.0\.claude-plugin\hooks"
-$CachePlugin = "C:\Users\SukinShetty\.claude\plugins\cache\nemp-memory\nemp\0.3.0\.claude-plugin\plugin.json"
+$MarketplaceCommands = "C:\Users\SukinShetty\.claude\plugins\marketplaces\afmem-memory\commands"
+$MarketplaceHooks = "C:\Users\SukinShetty\.claude\plugins\marketplaces\afmem-memory\.claude-plugin\hooks"
+$MarketplacePlugin = "C:\Users\SukinShetty\.claude\plugins\marketplaces\afmem-memory\.claude-plugin\plugin.json"
+$CacheCommands = "C:\Users\SukinShetty\.claude\plugins\cache\afmem-memory\afmem\0.3.0\commands"
+$CacheHooks = "C:\Users\SukinShetty\.claude\plugins\cache\afmem-memory\afmem\0.3.0\.claude-plugin\hooks"
+$CachePlugin = "C:\Users\SukinShetty\.claude\plugins\cache\afmem-memory\afmem\0.3.0\.claude-plugin\plugin.json"
 
-Write-Host "=== Nemp Memory Plugin Sync ===" -ForegroundColor Cyan
+Write-Host "=== AF Memory Plugin Sync ===" -ForegroundColor Cyan
 Write-Host ""
 
 # Ensure all destination directories exist before copying
@@ -58,5 +58,5 @@ Write-Host "  Copied: plugin.json to marketplace + cache" -ForegroundColor Green
 Write-Host ""
 
 Write-Host "=== Sync Complete ===" -ForegroundColor Cyan
-Write-Host "  Marketplace: ~/.claude/plugins/marketplaces/nemp-memory/" -ForegroundColor Gray
-Write-Host "  Cache: ~/.claude/plugins/cache/nemp-memory/nemp/0.3.0/" -ForegroundColor Gray
+Write-Host "  Marketplace: ~/.claude/plugins/marketplaces/afmem-memory/" -ForegroundColor Gray
+Write-Host "  Cache: ~/.claude/plugins/cache/afmem-memory/afmem/0.3.0/" -ForegroundColor Gray

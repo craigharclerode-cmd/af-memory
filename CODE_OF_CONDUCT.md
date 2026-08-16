@@ -2,7 +2,7 @@
 
 ## Our Pledge
 
-We pledge to make participation in Nemp a harassment-free experience for everyone.
+We pledge to make participation in AF Memory a harassment-free experience for everyone.
 
 ## Our Standards
 
@@ -20,7 +20,7 @@ We pledge to make participation in Nemp a harassment-free experience for everyon
 
 ## Enforcement
 
-Violations can be reported to contact@nemp.dev
+Violations can be reported to craig.harclerode@gmail.com
 
 ## Attribution
 

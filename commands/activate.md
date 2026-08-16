@@ -1,15 +1,15 @@
 ---
-description: "Activate Nemp Pro with your license key"
+description: "Activate AF Memory Pro with your license key"
 argument-hint: "<license-key>"
 ---
 
-# /nemp:activate
+# /afmem:activate
 
-Activate Nemp Pro by entering your license key. Once activated, all Pro features are unlocked — Cortex, Foresight, Decay, Import, cross-provider Export, and advanced Health diagnostics.
+Activate AF Memory Pro by entering your license key. Once activated, all Pro features are unlocked — Cortex, Foresight, Decay, Import, cross-provider Export, and advanced Health diagnostics.
 
 ## Usage
 ```
-/nemp:activate NEMP-PRO-XXXX-XXXX
+/afmem:activate AFMEM-PRO-XXXX-XXXX
 ```
 
 ## Instructions
@@ -19,10 +19,10 @@ Activate Nemp Pro by entering your license key. Once activated, all Pro features
 Extract the license key from the argument. If no argument is provided, show:
 
 ```
-Usage: /nemp:activate <license-key>
+Usage: /afmem:activate <license-key>
 
-License keys look like: NEMP-PRO-XXXX-XXXX
-Get yours at nemp.dev/pro
+License keys look like: AFMEM-PRO-XXXX-XXXX
+Get yours at afmem.dev/pro
 ```
 
 Stop.
@@ -30,7 +30,7 @@ Stop.
 ### Step 2: Validate Key Format
 
 Check the key format:
-- Must start with `NEMP-PRO-`
+- Must start with `AFMEM-PRO-`
 - Followed by exactly 9 characters (letters, numbers, or hyphens)
 
 If the format is invalid:
@@ -38,15 +38,15 @@ If the format is invalid:
 ```
 ❌ Invalid license key format.
 
-Keys look like: NEMP-PRO-XXXX-XXXX
-Get yours at nemp.dev/pro
+Keys look like: AFMEM-PRO-XXXX-XXXX
+Get yours at afmem.dev/pro
 ```
 
 Stop.
 
 ### Step 3: Save License
 
-Create or overwrite `.nemp/license.json` with:
+Create or overwrite `memory/license.json` with:
 
 ```json
 {
@@ -59,21 +59,21 @@ Create or overwrite `.nemp/license.json` with:
 ### Step 4: Confirm Activation
 
 ```
-✅ Nemp Pro activated!
+✅ AF Memory Pro activated!
 
 All Pro features are now unlocked:
-  /nemp:cortex      Memory intelligence layer
-  /nemp:foresight   Predictive context loading
-  /nemp:decay       Auto-archive stale memories
-  /nemp:import      Cross-provider import
-  /nemp:export --codex / --cursor / --windsurf / --all
-  /nemp:health --verbose / --fix
+  /afmem:cortex      Memory intelligence layer
+  /afmem:foresight   Predictive context loading
+  /afmem:decay       Auto-archive stale memories
+  /afmem:import      Cross-provider import
+  /afmem:export --codex / --cursor / --windsurf / --all
+  /afmem:health --verbose / --fix
 
-License saved to .nemp/license.json
+License saved to memory/license.json
 ```
 
 ## Related Commands
 
-- `/nemp:health` — Check system status
-- `/nemp:cortex` — Memory intelligence (now unlocked)
-- `/nemp:foresight` — Predictive loading (now unlocked)
+- `/afmem:health` — Check system status
+- `/afmem:cortex` — Memory intelligence (now unlocked)
+- `/afmem:foresight` — Predictive loading (now unlocked)

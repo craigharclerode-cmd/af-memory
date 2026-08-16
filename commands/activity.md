@@ -3,22 +3,22 @@ description: "View captured activity log"
 argument-hint: "[--clear|--stats]"
 ---
 
-# /nemp-pro:activity
+# /afmem-pro:activity
 
 View or manage the captured activity log.
 
 ## Usage
 ```
-/nemp-pro:activity          # View recent activities
-/nemp-pro:activity --clear  # Clear the activity log
-/nemp-pro:activity --stats  # Show activity statistics
+/afmem-pro:activity          # View recent activities
+/afmem-pro:activity --clear  # Clear the activity log
+/afmem-pro:activity --stats  # Show activity statistics
 ```
 
 ## Instructions
 
 ### 1. Read Activity Log
 
-Read `.nemp-pro/activity.log` file. If it doesn't exist, inform user that no activities have been captured yet.
+Read `memory/pro/activity.log` file. If it doesn't exist, inform user that no activities have been captured yet.
 
 ### 2. Handle Arguments
 
@@ -39,7 +39,7 @@ Showing last 20 entries. Total: 12
 ```
 
 **For `--clear`:**
-Ask for confirmation using AskUserQuestion, then delete `.nemp-pro/activity.log` if confirmed.
+Ask for confirmation using AskUserQuestion, then delete `memory/pro/activity.log` if confirmed.
 
 ```
 Activity log cleared. 12 entries removed.
@@ -77,8 +77,8 @@ If no activity log exists or is empty:
 ```
 No activities captured yet.
 
-Enable auto-capture: /nemp-pro:auto-capture on
+Enable auto-capture: /afmem-pro:auto-capture on
 ```
 
 ## Related Commands
-- `/nemp-pro:auto-capture` - Toggle auto-capture on/off
+- `/afmem-pro:auto-capture` - Toggle auto-capture on/off

@@ -3,28 +3,28 @@ description: "Retrieve a memory by key or search query"
 argument-hint: "<key-or-query>"
 ---
 
-# /nemp:recall
+# /afmem:recall
 
 Retrieve a memory by exact key or fuzzy search.
 
 ## Usage
-/nemp:recall <key-or-query>
+/afmem:recall <key-or-query>
 
 ## Arguments
 - `key-or-query`: Either an exact memory key OR a natural language query to search memories
 
 ## Instructions
 
-When the user invokes `/nemp:recall`, follow these steps:
+When the user invokes `/afmem:recall`, follow these steps:
 
 ### 1. Load All Memories
 Read from both storage locations and merge:
 ```bash
 # Read project memories if exists
-[ -f ".nemp/memories.json" ] && cat .nemp/memories.json
+[ -f "memory/memories.json" ] && cat memory/memories.json
 
 # Read global memories if exists
-[ -f "$HOME/.nemp/memories.json" ] && cat $HOME/.nemp/memories.json
+[ -f "$HOME/memory/memories.json" ] && cat $HOME/memory/memories.json
 ```
 
 ### 2. Search Strategy
@@ -50,9 +50,9 @@ Read from both storage locations and merge:
 
 **IMPORTANT: Always log read operations for audit trail.**
 
-After finding a match, append to `.nemp/access.log`:
+After finding a match, append to `memory/access.log`:
 ```bash
-echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] READ key=<key> agent=${CLAUDE_AGENT_NAME:-main} query=<original-query>" >> .nemp/access.log
+echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] READ key=<key> agent=${CLAUDE_AGENT_NAME:-main} query=<original-query>" >> memory/access.log
 ```
 
 ### 3b. Update Vitality Tracking
@@ -116,37 +116,37 @@ Source: project/global
 [key-two] (by <agent_id>) - <truncated-value-preview>...
 [key-three] (by <agent_id>) - <truncated-value-preview>...
 
-Use /nemp:recall <exact-key> for full details.
+Use /afmem:recall <exact-key> for full details.
 
 **No matches:**
 ❌ No memories found for "<query>"
 Suggestions:
 
-Use /nemp:list to see all available memories
+Use /afmem:list to see all available memories
 Try different keywords
-Save a new memory with /nemp:save
+Save a new memory with /afmem:save
 
 
 ## Examples
 
 ### Exact key lookup
-User: `/nemp:recall auth-flow`
+User: `/afmem:recall auth-flow`
 🔍 Memory: auth-flow
 Value: "Authentication uses JWT access tokens (15min) with refresh tokens (7 days). Tokens stored in httpOnly cookies."
 Type: procedure | Vitality: 94 (thriving) | Confidence: 0.91
 Agent: main
 Created: 2024-01-15T10:30:00Z
 Updated: 2024-01-20T14:22:00Z
-Source: project (.nemp/memories.json)
+Source: project (memory/memories.json)
 
 ### Natural language query
-User: `/nemp:recall how does auth work`
+User: `/afmem:recall how does auth work`
 🔍 Found 2 memories matching "how does auth work":
 
 [auth-flow] - "Authentication uses JWT access tokens..."
 [user-session-handling] - "Sessions expire after 30 days of inactivity..."
 
-Use /nemp:recall <exact-key> for full details.
+Use /afmem:recall <exact-key> for full details.
 
 ## Priority Order
 1. Project memories (more relevant to current context)

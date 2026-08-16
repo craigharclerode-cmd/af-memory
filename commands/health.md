@@ -1,45 +1,45 @@
 ---
-description: "Run diagnostics on Nemp Memory health and integrity"
+description: "Run diagnostics on AF Memory health and integrity"
 argument-hint: ""
 ---
 
-# /nemp:health
+# /afmem:health
 
-Run a health check on your Nemp Memory system. Detect corruption, stale data, sync drift, orphaned keys, and silent degradation before they cause problems.
+Run a health check on your AF Memory system. Detect corruption, stale data, sync drift, orphaned keys, and silent degradation before they cause problems.
 
 ## Usage
 ```
-/nemp:health    # Run health check with score and issues list
+/afmem:health    # Run health check with score and issues list
 ```
 
 ## Why This Exists
 
 Every memory tool assumes your data is fine. They silently degrade — ghost references, corrupted indexes, stale CLAUDE.md, orphaned keys. You don't notice until the agent makes a wrong decision based on bad context.
 
-`/nemp:health` catches problems before they break your agent.
+`/afmem:health` catches problems before they break your agent.
 
 ## Instructions
 
-When the user invokes `/nemp:health`, run ALL checks below in sequence, then display a scored report.
+When the user invokes `/afmem:health`, run ALL checks below in sequence, then display a scored report.
 
-### Step 1: Check .nemp/ Directory Exists
+### Step 1: Check memory/ Directory Exists
 
 ```bash
-[ -d ".nemp" ] && echo "NEMP_DIR_EXISTS" || echo "NEMP_DIR_MISSING"
+[ -d ".afmem" ] && echo "AFMEM_DIR_EXISTS" || echo "AFMEM_DIR_MISSING"
 ```
 
-If `.nemp/` doesn't exist:
+If `memory/` doesn't exist:
 ```
-❌ CRITICAL: No .nemp/ directory found.
+❌ CRITICAL: No memory/ directory found.
 
-Run /nemp:init to initialize Nemp Memory.
+Run /afmem:init to initialize AF Memory.
 ```
 **Stop here** — no further checks possible.
 
 ### Step 2: Check memories.json Exists and Is Valid JSON
 
 ```bash
-[ -f ".nemp/memories.json" ] && python3 -c "import json; data=json.load(open('.nemp/memories.json')); print(f'VALID_JSON entries={len(data)}')" 2>&1 || echo "MISSING_OR_INVALID"
+[ -f "memory/memories.json" ] && python3 -c "import json; data=json.load(open('memory/memories.json')); print(f'VALID_JSON entries={len(data)}')" 2>&1 || echo "MISSING_OR_INVALID"
 ```
 
 **Checks:**
@@ -89,26 +89,26 @@ For each memory entry in memories.json, verify:
 **4a. CLAUDE.md exists?**
 - ✅ exists or ⚠️ missing
 
-**4b. Nemp section present?**
-- Look for `## Project Context (via Nemp Memory)`
-- ✅ found or ⚠️ no Nemp section
+**4b. AF Memory section present?**
+- Look for `## Project Context (via AF Memory)`
+- ✅ found or ⚠️ no AF Memory section
 
 **4c. Sync freshness:**
-- Extract "Last updated:" timestamp from Nemp section
+- Extract "Last updated:" timestamp from AF Memory section
 - Compare to most recent `updated` timestamp in memories.json
 - If memories are newer than CLAUDE.md → ⚠️ STALE
 - Report time difference
 
 **4d. Content drift:**
 - Count memories in memories.json
-- Count entries in CLAUDE.md Nemp section
+- Count entries in CLAUDE.md AF Memory section
 - If counts differ → ⚠️ OUT OF SYNC
 - List which memories are missing from CLAUDE.md
 
 ### Step 5: Access Log Health
 
 ```bash
-[ -f ".nemp/access.log" ] && wc -l .nemp/access.log && head -1 .nemp/access.log && tail -1 .nemp/access.log || echo "NO_ACCESS_LOG"
+[ -f "memory/access.log" ] && wc -l memory/access.log && head -1 memory/access.log && tail -1 memory/access.log || echo "NO_ACCESS_LOG"
 ```
 
 **Checks:**
@@ -121,7 +121,7 @@ For each memory entry in memories.json, verify:
 ### Step 6: Config Check
 
 ```bash
-[ -f ".nemp/config.json" ] && cat .nemp/config.json || echo "NO_CONFIG"
+[ -f "memory/config.json" ] && cat memory/config.json || echo "NO_CONFIG"
 ```
 
 **Checks:**
@@ -132,7 +132,7 @@ For each memory entry in memories.json, verify:
 ### Step 7: MEMORY.md Index Check
 
 ```bash
-[ -f ".nemp/MEMORY.md" ] && echo "MEMORY_MD_EXISTS" || echo "MEMORY_MD_MISSING"
+[ -f "memory/MEMORY.md" ] && echo "MEMORY_MD_EXISTS" || echo "MEMORY_MD_MISSING"
 ```
 
 **Checks:**
@@ -143,7 +143,7 @@ For each memory entry in memories.json, verify:
 ### Step 8: Global Memory Check
 
 ```bash
-[ -f "$HOME/.nemp/memories.json" ] && python3 -c "import json; data=json.load(open('$HOME/.nemp/memories.json')); print(f'VALID entries={len(data)}')" 2>&1 || echo "NO_GLOBAL"
+[ -f "$HOME/memory/memories.json" ] && python3 -c "import json; data=json.load(open('$HOME/memory/memories.json')); print(f'VALID entries={len(data)}')" 2>&1 || echo "NO_GLOBAL"
 ```
 
 **Checks:**
@@ -153,9 +153,9 @@ For each memory entry in memories.json, verify:
 ### Step 9: Cortex Data Check
 
 ```bash
-[ -f ".nemp/cortex.json" ] && echo "CORTEX_EXISTS" || echo "NO_CORTEX"
-[ -f ".nemp/episodes.json" ] && echo "EPISODES_EXISTS" || echo "NO_EPISODES"
-[ -f ".nemp/archive.json" ] && echo "ARCHIVE_EXISTS" || echo "NO_ARCHIVE"
+[ -f "memory/cortex.json" ] && echo "CORTEX_EXISTS" || echo "NO_CORTEX"
+[ -f "memory/episodes.json" ] && echo "EPISODES_EXISTS" || echo "NO_EPISODES"
+[ -f "memory/archive.json" ] && echo "ARCHIVE_EXISTS" || echo "NO_ARCHIVE"
 ```
 
 **Checks:**
@@ -169,7 +169,7 @@ Score each check on a weighted scale:
 
 | Check | Weight | Pass | Fail |
 |-------|--------|------|------|
-| .nemp/ exists | 10 | 10 | 0 |
+| memory/ exists | 10 | 10 | 0 |
 | memories.json valid | 18 | 18 | 0 |
 | No empty values | 7 | 7 | -4 per empty |
 | Values under 200 chars | 5 | 5 | -1 per oversized |
@@ -192,7 +192,7 @@ Score each check on a weighted scale:
 ### Step 11: Display Report
 
 ```
-Nemp Memory Health Check
+AF Memory Health Check
 
   Score: 73/80 🟢 HEALTHY
 
@@ -205,12 +205,12 @@ Nemp Memory Health Check
   ✅ Global — 4 global memories
 
   Issues found: 2
-    ⚠️ auth-strategy: value is 247 chars (compress with /nemp:save)
-    ❌ auth-flow: empty value (delete with /nemp:forget auth-flow)
+    ⚠️ auth-strategy: value is 247 chars (compress with /afmem:save)
+    ❌ auth-flow: empty value (delete with /afmem:forget auth-flow)
 
   Quick fix:
-    /nemp:save auth-strategy "<shorter version>"
-    /nemp:forget auth-flow
+    /afmem:save auth-strategy "<shorter version>"
+    /afmem:forget auth-flow
 ```
 
 If no issues found:
@@ -220,26 +220,26 @@ If no issues found:
 
 ## Error Handling
 
-- If `.nemp/` doesn't exist → Stop with init prompt
+- If `memory/` doesn't exist → Stop with init prompt
 - If memories.json is corrupted → Report error, suggest backup
 - If any check fails → Continue other checks, report all issues
 
 ## Related Commands
 
-- `/nemp:init` — Initialize Nemp Memory
-- `/nemp:export` — Sync memories to CLAUDE.md
-- `/nemp:list` — View all memories
-- `/nemp:save` — Save or update a memory
-- `/nemp:forget` — Remove a memory
+- `/afmem:init` — Initialize AF Memory
+- `/afmem:export` — Sync memories to CLAUDE.md
+- `/afmem:list` — View all memories
+- `/afmem:save` — Save or update a memory
+- `/afmem:forget` — Remove a memory
 
 ---
 
-## Nemp Pro
+## AF Memory Pro
 
-Unlock advanced diagnostics with [Nemp Pro](https://nemp.dev/pro):
+Unlock advanced diagnostics with [AF Memory Pro](https://piafc.com/pro):
 
-- `/nemp:health --verbose` — Show pass/fail status for every check
-- `/nemp:health --fix` — Auto-fix safe issues (empty values, missing files)
-- `/nemp:cortex` — Memory intelligence with trust scores and conflict detection
+- `/afmem:health --verbose` — Show pass/fail status for every check
+- `/afmem:health --fix` — Auto-fix safe issues (empty values, missing files)
+- `/afmem:cortex` — Memory intelligence with trust scores and conflict detection
 
-Already have a license? Run `/nemp:activate <key>` to unlock.
+Already have a license? Run `/afmem:activate <key>` to unlock.

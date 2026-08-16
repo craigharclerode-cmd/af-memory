@@ -3,13 +3,13 @@ description: "Retrieve a global memory"
 argument-hint: "<key>"
 ---
 
-# /nemp:recall-global
+# /afmem:recall-global
 
 Retrieve a memory from global storage by exact key or search.
 
 ## Usage
 ```
-/nemp:recall-global <key-or-query>
+/afmem:recall-global <key-or-query>
 ```
 
 ## Arguments
@@ -17,14 +17,14 @@ Retrieve a memory from global storage by exact key or search.
 
 ## Instructions
 
-When the user invokes `/nemp:recall-global`, follow these steps:
+When the user invokes `/afmem:recall-global`, follow these steps:
 
 ### 1. Load Global Memories
 Read ONLY from global storage:
 
 ```bash
-if [ -f "$HOME/.nemp/memories.json" ]; then
-  cat "$HOME/.nemp/memories.json"
+if [ -f "$HOME/memory/memories.json" ]; then
+  cat "$HOME/memory/memories.json"
 else
   echo '{"memories":[]}'
 fi
@@ -61,7 +61,7 @@ Found N global memories matching "<query>":
 1. [key-one] - <truncated-value-preview>...
 2. [key-two] - <truncated-value-preview>...
 
-Use `/nemp:recall-global <exact-key>` for full details.
+Use `/afmem:recall-global <exact-key>` for full details.
 ```
 
 **No matches:**
@@ -69,16 +69,16 @@ Use `/nemp:recall-global <exact-key>` for full details.
 No global memories found for "<query>"
 
 Suggestions:
-- Use `/nemp:list-global` to see all global memories
+- Use `/afmem:list-global` to see all global memories
 - Try different keywords
-- Save a new global memory with `/nemp:save-global`
-- Check project memories with `/nemp:recall`
+- Save a new global memory with `/afmem:save-global`
+- Check project memories with `/afmem:recall`
 ```
 
 ## Examples
 
 ### Exact key lookup
-User: `/nemp:recall-global preferred-editor`
+User: `/afmem:recall-global preferred-editor`
 ```
 Memory (global): preferred-editor
    Value: "VS Code with Vim keybindings and Monokai theme"
@@ -87,16 +87,16 @@ Memory (global): preferred-editor
 ```
 
 ### Search query
-User: `/nemp:recall-global git workflow`
+User: `/afmem:recall-global git workflow`
 ```
 Found 2 global memories matching "git workflow":
 
 1. [git-workflow] - "Always rebase, never merge. Use conventional commits..."
 2. [git-hooks] - "Pre-commit: lint + format. Pre-push: run tests..."
 
-Use `/nemp:recall-global <exact-key>` for full details.
+Use `/afmem:recall-global <exact-key>` for full details.
 ```
 
 ## Note
-This command only searches global memories (`~/.nemp/memories.json`).
-To search both project and global memories, use `/nemp:recall` instead.
+This command only searches global memories (`~/memory/memories.json`).
+To search both project and global memories, use `/afmem:recall` instead.

@@ -3,17 +3,17 @@ description: "Search memories by keyword and show relevant context"
 argument-hint: "<search-query>"
 ---
 
-# /nemp:context
+# /afmem:context
 
 Find and display memories relevant to a search query using smart keyword expansion.
 
 ## Usage
 ```bash
-/nemp:context auth           # Find memories related to authentication
-/nemp:context database       # Find database-related memories
-/nemp:context api            # Find API-related memories
-/nemp:context style          # Find styling/CSS memories
-/nemp:context test           # Find testing-related memories
+/afmem:context auth           # Find memories related to authentication
+/afmem:context database       # Find database-related memories
+/afmem:context api            # Find API-related memories
+/afmem:context style          # Find styling/CSS memories
+/afmem:context test           # Find testing-related memories
 ```
 
 ## Instructions
@@ -23,16 +23,16 @@ Extract the search term from the user's command argument.
 
 If no argument provided, show help:
 ```
-Nemp Context Search
+AF Memory Context Search
 
-Usage: /nemp:context <search-term>
+Usage: /afmem:context <search-term>
 
 Examples:
-  /nemp:context auth      - Find authentication memories
-  /nemp:context database  - Find database memories
-  /nemp:context api       - Find API memories
-  /nemp:context style     - Find styling/CSS memories
-  /nemp:context test      - Find testing memories
+  /afmem:context auth      - Find authentication memories
+  /afmem:context database  - Find database memories
+  /afmem:context api       - Find API memories
+  /afmem:context style     - Find styling/CSS memories
+  /afmem:context test      - Find testing memories
 
 Smart search expands your query to related terms!
 ```
@@ -90,8 +90,8 @@ types, typescript:
 **Read memory files:**
 
 ```
-Project memories: .nemp/memories.json
-Global memories:  ~/.nemp/memories.json
+Project memories: memory/memories.json
+Global memories:  ~/memory/memories.json
 
 Memory format:
 {
@@ -163,7 +163,7 @@ For each memory that matches and will be displayed to the user, update its vital
 
 **Log the operation:**
 ```bash
-echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] CONTEXT_READ agent=${CLAUDE_AGENT_NAME:-main} query=<query> matched=<n>" >> .nemp/access.log
+echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] CONTEXT_READ agent=${CLAUDE_AGENT_NAME:-main} query=<query> matched=<n>" >> memory/access.log
 ```
 
 ### 5. Display Results
@@ -203,8 +203,8 @@ GLOBAL MEMORIES
 Found 3 memories (2 project, 1 global)
 
 Quick actions:
-  /nemp:recall auth-config    View full memory
-  /nemp:save <key> <value>    Save new memory
+  /afmem:recall auth-config    View full memory
+  /afmem:save <key> <value>    Save new memory
 ```
 
 **When no matches found:**
@@ -217,9 +217,9 @@ Expanded to: kubernetes, k8s, helm, pod, container...
 No matching memories found.
 
 Suggestions:
-  • Save relevant info: /nemp:save kubernetes "your notes here"
+  • Save relevant info: /afmem:save kubernetes "your notes here"
   • Try related terms: deploy, docker, hosting
-  • List all memories: /nemp:list
+  • List all memories: /afmem:list
 ```
 
 ### 6. Handle No Results Gracefully
@@ -233,9 +233,9 @@ Context Search: "auth"
 No memories saved yet!
 
 Get started:
-  /nemp:init              Auto-detect project and save context
-  /nemp:save auth "..."   Save authentication notes
-  /nemp:save-global ...   Save global preferences
+  /afmem:init              Auto-detect project and save context
+  /afmem:save auth "..."   Save authentication notes
+  /afmem:save-global ...   Save global preferences
 
 Once you have memories, search will find them automatically.
 ```
@@ -250,8 +250,8 @@ No matching memories found.
 
 You have 5 memories saved. Try:
   • Broader terms: "deploy", "docker", "hosting"
-  • List all: /nemp:list
-  • Save new: /nemp:save kubernetes "your k8s notes"
+  • List all: /afmem:list
+  • Save new: /afmem:save kubernetes "your k8s notes"
 ```
 
 **Scenario C: Memory files don't exist or are corrupted**
@@ -261,12 +261,12 @@ Context Search: "auth"
 Could not read memories.
 
 Troubleshooting:
-  • Run /nemp:init to initialize project memories
-  • Check if .nemp/memories.json exists
+  • Run /afmem:init to initialize project memories
+  • Check if memory/memories.json exists
   • Ensure valid JSON format
 
 Create memories:
-  /nemp:save <key> <value>
+  /afmem:save <key> <value>
 ```
 
 **Smart Suggestions Based on Query:**
@@ -285,7 +285,7 @@ zustand         →  state, store, redux
 
 ### 7. Smart Keyword Expansion
 
-This is what makes `/nemp:context` INTELLIGENT!
+This is what makes `/afmem:context` INTELLIGENT!
 
 When a user searches for "auth", don't just search for "auth" - automatically expand to ALL related terms:
 
@@ -399,8 +399,8 @@ esac
 # STEP 2: Read Memory Files
 # ═══════════════════════════════════════════════════════════
 
-PROJECT_MEMORIES=".nemp/memories.json"
-GLOBAL_MEMORIES="$HOME/.nemp/memories.json"
+PROJECT_MEMORIES="memory/memories.json"
+GLOBAL_MEMORIES="$HOME/memory/memories.json"
 
 # Read project memories (if exists)
 if [ -f "$PROJECT_MEMORIES" ]; then
@@ -445,14 +445,14 @@ done
 # (See display format in section 5)
 ```
 
-**When user runs `/nemp:context auth`:**
+**When user runs `/afmem:context auth`:**
 
 ```
 Input:  "auth"
          ↓
 Step 1: Expand to 15 related keywords
          ↓
-Step 2: Load .nemp/memories.json + ~/.nemp/memories.json
+Step 2: Load memory/memories.json + ~/memory/memories.json
          ↓
 Step 3: Search all memories for any keyword match
          ↓
@@ -464,11 +464,11 @@ Step 5: Display beautiful formatted output
 **Example execution flow:**
 
 ```
-$ /nemp:context auth
+$ /afmem:context auth
 
 Reading memories...
-  ✓ Project: .nemp/memories.json (8 entries)
-  ✓ Global:  ~/.nemp/memories.json (3 entries)
+  ✓ Project: memory/memories.json (8 entries)
+  ✓ Global:  ~/memory/memories.json (3 entries)
 
 Expanding "auth" → 15 keywords...
   auth, authentication, login, session, jwt, oauth,
@@ -502,7 +502,7 @@ Displaying results...
 | `cache` | cache, caching, redis, memcached, invalidate, ttl, store, persist, revalidate |
 
 ## Related Commands
-- `/nemp:recall <key>` - View full memory content
-- `/nemp:list` - List all memory keys
-- `/nemp:save <key> <value>` - Save new memory
-- `/nemp:list-global` - List global memories
+- `/afmem:recall <key>` - View full memory content
+- `/afmem:list` - List all memory keys
+- `/afmem:save <key> <value>` - Save new memory
+- `/afmem:list-global` - List global memories

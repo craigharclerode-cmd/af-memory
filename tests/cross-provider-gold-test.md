@@ -10,27 +10,27 @@ Save these 10 test memories, export to each provider, and verify the output.
 Run these commands in Claude Code:
 
 ```
-/nemp:save pkg-manager "Always use pnpm. Never use npm or yarn."
-/nemp:save framework "Next.js 14 with App Router"
-/nemp:save database "PostgreSQL via Prisma ORM"
-/nemp:save test-cmd "Run tests with: pnpm test"
-/nemp:save deploy-cmd "Deploy with: docker compose up -d"
-/nemp:save style-vars "Use camelCase for variables, PascalCase for components"
-/nemp:save api-base "Main API base URL is /api/v1"
-/nemp:save no-env-commit "Never commit .env files to git"
-/nemp:save auth-method "JWT authentication with refresh tokens"
-/nemp:save error-handling "Always use try-catch with specific error types"
+/afmem:save pkg-manager "Always use pnpm. Never use npm or yarn."
+/afmem:save framework "Next.js 14 with App Router"
+/afmem:save database "PostgreSQL via Prisma ORM"
+/afmem:save test-cmd "Run tests with: pnpm test"
+/afmem:save deploy-cmd "Deploy with: docker compose up -d"
+/afmem:save style-vars "Use camelCase for variables, PascalCase for components"
+/afmem:save api-base "Main API base URL is /api/v1"
+/afmem:save no-env-commit "Never commit .env files to git"
+/afmem:save auth-method "JWT authentication with refresh tokens"
+/afmem:save error-handling "Always use try-catch with specific error types"
 ```
 
 ## Step 2: Export to All Providers
 
 ```
-/nemp-pro:export --all
+/afmem-pro:export --all
 ```
 
 Expected output:
 - AGENTS.md created (root)
-- .cursor/rules/nemp-memory.mdc created
+- .cursor/rules/afmem-memory.mdc created
 - .windsurfrules created
 - CLAUDE.md updated
 
@@ -55,7 +55,7 @@ Pass threshold: 10/10
 
 ## Step 4: Cursor Validation
 
-Open project in Cursor. The .cursor/rules/nemp-memory.mdc rule should be auto-applied.
+Open project in Cursor. The .cursor/rules/afmem-memory.mdc rule should be auto-applied.
 Ask the same 10 questions. Pass threshold: 10/10
 
 ## Step 5: Windsurf Validation
@@ -72,16 +72,16 @@ Edit AGENTS.md manually to add:
 
 Then in Claude Code:
 ```
-/nemp-pro:import --codex
+/afmem-pro:import --codex
 ```
 
-Expected: "new-key" appears in /nemp:list
+Expected: "new-key" appears in /afmem:list
 
 ## Step 7: Auto-Export Test
 
 ```
-/nemp-pro:auto-export on
-/nemp:save test-auto "This tests auto-export"
+/afmem-pro:auto-export on
+/afmem:save test-auto "This tests auto-export"
 ```
 
 Expected: AGENTS.md automatically updates to include "test-auto"
@@ -90,7 +90,7 @@ Expected: AGENTS.md automatically updates to include "test-auto"
 
 - [ ] All 10 gold memories export correctly to all 3 providers
 - [ ] Codex answers all 10 test questions correctly
-- [ ] Import round-trip works (add in AGENTS.md → import to Nemp)
-- [ ] Auto-export triggers on /nemp:save
+- [ ] Import round-trip works (add in AGENTS.md → import to AF Memory)
+- [ ] Auto-export triggers on /afmem:save
 - [ ] No extinct memories appear in exports
 - [ ] Files stay under 4000 tokens

@@ -1,10 +1,10 @@
-# NEMP CORTEX — Complete Build Specification
+# AFMEM CORTEX — Complete Build Specification
 
 **Tagline:** *"Memory that thinks."*
 
-**What it is:** The intelligence layer of Nemp. Cortex turns passive memory storage into a self-evolving, self-correcting cognitive system. It tracks what agents use, learns why it matters, predicts what's needed next, detects its own contradictions, validates itself against reality, and rewrites memories into better forms — all locally, zero cloud, zero ML models.
+**What it is:** The intelligence layer of AF Memory. Cortex turns passive memory storage into a self-evolving, self-correcting cognitive system. It tracks what agents use, learns why it matters, predicts what's needed next, detects its own contradictions, validates itself against reality, and rewrites memories into better forms — all locally, zero cloud, zero ML models.
 
-**Why it exists:** Every AI memory tool today (Mem0, Zep, claude-mem, Supermemory) is a filing cabinet. Nemp Cortex is the first memory system that behaves like a brain.
+**Why it exists:** Every AI memory tool today (Mem0, Zep, claude-mem, Supermemory) is a filing cabinet. AF Memory Cortex is the first memory system that behaves like a brain.
 
 ---
 
@@ -100,7 +100,7 @@ Every memory MUST have a `type` field. This controls decay behavior, Foresight b
 | `error-pattern` | Known failure mode | Slow (0.02/day) | Boost when similar task |
 | `hypothesis` | Experimental belief | Fast (0.06/day) | Add uncertainty flag |
 
-**Auto-type inference:** When user runs `/nemp:save` without a type, Cortex analyzes the key + value and suggests a type:
+**Auto-type inference:** When user runs `/afmem:save` without a type, Cortex analyzes the key + value and suggests a type:
 - Key contains "todo", "fix", "temp" → `temporary`
 - Key contains "config", "setup" → `fact`
 - Key contains "bug", "error", "issue" → `error-pattern`
@@ -115,12 +115,12 @@ Every read path must increment counters:
 
 | Read Path | Increments |
 |-----------|-----------|
-| `/nemp:recall <key>` | `reads`, `reads_7d`, `reads_30d`, `last_read` |
-| `/nemp:context` | Same as recall for each returned memory |
-| `/nemp:foresight` (selected) | Same + `foresight_loads` |
-| `/nemp:foresight` (available but not selected) | `foresight_skips` |
+| `/afmem:recall <key>` | `reads`, `reads_7d`, `reads_30d`, `last_read` |
+| `/afmem:context` | Same as recall for each returned memory |
+| `/afmem:foresight` (selected) | Same + `foresight_loads` |
+| `/afmem:foresight` (available but not selected) | `foresight_skips` |
 | CLAUDE.md auto-load | `reads` + mark as auto-loaded |
-| `/nemp:list` | No increment (browsing ≠ using) |
+| `/afmem:list` | No increment (browsing ≠ using) |
 
 **Agent reference detection:** After the agent produces output, Cortex scans for mentions of memory keys in the agent's response. If found, increment `agent_references`. This tells us: did the agent actually USE this memory, or just receive it?
 
@@ -128,7 +128,7 @@ Implementation: At the end of each tool response, check if any memory keys appea
 
 ### 1.4 Episodic Memory
 
-Store compact task histories in `.nemp/episodes.json`:
+Store compact task histories in `memory/episodes.json`:
 
 ```json
 {
@@ -150,7 +150,7 @@ Store compact task histories in `.nemp/episodes.json`:
 ```
 
 **When to create an episode:**
-- After `/nemp:foresight` loads memories for a task → start episode
+- After `/afmem:foresight` loads memories for a task → start episode
 - Track which memories the agent references during the task
 - When user gives feedback (correction, approval, next task) → close episode
 - If task abandoned → close with `outcome: "abandoned"`
@@ -289,7 +289,7 @@ Where:
 
 ### 2.3 Goal Memory
 
-Active goals stored in `.nemp/cortex.json`:
+Active goals stored in `memory/cortex.json`:
 
 ```json
 {
@@ -315,7 +315,7 @@ Active goals stored in `.nemp/cortex.json`:
 - Memories linked to active goals get vitality boost (+15)
 - When a goal completes, Cortex extracts lessons from its episodes
 - `temporary` memories linked ONLY to completed goals → auto-archive
-- Goals can be created via `/nemp:cortex goal "Fix login bug"` or auto-detected from Foresight context
+- Goals can be created via `/afmem:cortex goal "Fix login bug"` or auto-detected from Foresight context
 
 ### 2.4 Scoped Contexts (Perspective Memory)
 
@@ -443,7 +443,7 @@ Detect internal conflicts between memories.
 
 **Scan triggers:**
 - Periodically (every 5 sessions)
-- On `/nemp:cortex resolve`
+- On `/afmem:cortex resolve`
 - When a new memory is saved that overlaps with existing
 
 **Detection methods:**
@@ -485,7 +485,7 @@ Detect internal conflicts between memories.
 
 After every N sessions (default: 5), Cortex generates a self-assessment.
 
-**Output: `.nemp/cortex-reflection.md`** (synced to CLAUDE.md)
+**Output: `memory/cortex-reflection.md`** (synced to CLAUDE.md)
 
 ```markdown
 # Cortex Reflection — Feb 26, 2026
@@ -531,7 +531,7 @@ When an agent makes an error the user corrects, Cortex traces which memories wer
 **Correction signals:**
 - User says "that's wrong", "no", "incorrect", "fix this"
 - User overwrites a memory value right after loading it
-- User runs `/nemp:save` on a key that was just loaded with a different value
+- User runs `/afmem:save` on a key that was just loaded with a different value
 
 **Alert at 3+ corrections:**
 ```
@@ -542,7 +542,7 @@ When an agent makes an error the user corrects, Cortex traces which memories wer
    Current value: "REST API at /api/v1. Auth: 3 routes."
    Confidence: 0.46 (was 0.91, reduced by corrections)
    
-   Suggestion: Update with /nemp:save api-design "new value"
+   Suggestion: Update with /afmem:save api-design "new value"
 ```
 
 ---
@@ -551,37 +551,37 @@ When an agent makes an error the user corrects, Cortex traces which memories wer
 
 These commands make Cortex feel intelligent.
 
-### 4.1 `/nemp:cortex` — Main Report
+### 4.1 `/afmem:cortex` — Main Report
 
 The evolution report combining all intelligence.
 
 **Standard mode:** Full report (reflection + vitality + conflicts + suggestions)
 
-**`/nemp:cortex status`** — Quick one-liner:
+**`/afmem:cortex status`** — Quick one-liner:
 ```
 CORTEX: 12 memories | 3 thriving | 1 extinct | 2 fusions | 1 conflict | 78% accuracy | trust: 84%
 ```
 
-**`/nemp:cortex --apply`** — Execute safe actions:
+**`/afmem:cortex --apply`** — Execute safe actions:
 - Archive extinct memories
 - Apply user-approved fusions
 - Resolve confirmed conflicts
 - Update CLAUDE.md
 - Log all actions to evolution.log
 
-**`/nemp:cortex --history`** — Evolution timeline:
+**`/afmem:cortex --history`** — Evolution timeline:
 ```
 auth-flow: created Feb 4 → updated 3x → 47 reads → thriving (94)
 old-todo: created Feb 4 → 1 read → fading → archived Feb 26
 auth-system: fused from auth-flow + login-config on Feb 26
 ```
 
-### 4.2 `/nemp:cortex insight <task>` — Explain Memory Selection
+### 4.2 `/afmem:cortex insight <task>` — Explain Memory Selection
 
 Explain WHY memories would be loaded for a given task.
 
 ```
-/nemp:cortex insight "Fix token expiry bug"
+/afmem:cortex insight "Fix token expiry bug"
 
 CORTEX INSIGHT:
 
@@ -600,12 +600,12 @@ Warnings:
   ⚠️ auth-flow + old-auth-config together led to errors in 3 episodes
 ```
 
-### 4.3 `/nemp:cortex resolve` — Conflict Resolution
+### 4.3 `/afmem:cortex resolve` — Conflict Resolution
 
 Interactive conflict resolution.
 
 ```
-/nemp:cortex resolve
+/afmem:cortex resolve
 
 2 conflicts found:
 
@@ -624,12 +624,12 @@ Interactive conflict resolution.
 Actions: [split] [replace] [mark-obsolete] [keep-both] [skip]
 ```
 
-### 4.4 `/nemp:cortex learn` — Extract Lessons
+### 4.4 `/afmem:cortex learn` — Extract Lessons
 
 After successful tasks, convert execution into reusable intelligence.
 
 ```
-/nemp:cortex learn
+/afmem:cortex learn
 
 Last episode: Fix login expiry bug
 Outcome: success
@@ -647,12 +647,12 @@ Lessons are offered as new memories with:
 - `confidence.source: "outcome-validated"` (0.95)
 - Linked to the goal that produced them
 
-### 4.5 `/nemp:cortex simulate <task>` — Predict Needs
+### 4.5 `/afmem:cortex simulate <task>` — Predict Needs
 
 Simulate what a task will need BEFORE starting it.
 
 ```
-/nemp:cortex simulate "Migrate auth to magic link"
+/afmem:cortex simulate "Migrate auth to magic link"
 
 CORTEX SIMULATION:
 
@@ -678,7 +678,7 @@ Suggested prep:
   3. Check if session-mgmt needs updating for magic link flow
 ```
 
-### 4.6 `/nemp:cortex trust` — Trust Dashboard
+### 4.6 `/afmem:cortex trust` — Trust Dashboard
 
 Overall reliability report.
 
@@ -698,8 +698,8 @@ Correction-prone: 1 memory with 3+ correction events
 Stale: 3 memories not validated in 30+ days
 
 Recommendations:
-  1. Validate 3 stale memories (/nemp:cortex validate)
-  2. Resolve 2 conflicts (/nemp:cortex resolve)
+  1. Validate 3 stale memories (/afmem:cortex validate)
+  2. Resolve 2 conflicts (/afmem:cortex resolve)
   3. Review old-auth-v0 (correction-prone + low confidence)
 ```
 
@@ -737,7 +737,7 @@ CORTEX META-INSIGHT:
 
 Cortex can verify memories against the actual codebase.
 
-**`/nemp:cortex validate`**
+**`/afmem:cortex validate`**
 
 Checks memories against:
 - `package.json` (framework, dependencies)
@@ -748,7 +748,7 @@ Checks memories against:
 - Schema files (database schema)
 
 ```
-/nemp:cortex validate
+/afmem:cortex validate
 
 Checking 12 memories against codebase...
 
@@ -773,7 +773,7 @@ Memories checked get `confidence.source` updated to `observed-from-code` or `inv
 ## FILE STRUCTURE
 
 ```
-.nemp/
+memory/
 ├── memories.json          ← enhanced with type, confidence, vitality, links
 ├── cortex.json            ← chains, goals, conflicts, causal links, meta
 ├── episodes.json          ← episodic memory (task histories)
@@ -810,23 +810,23 @@ Memories checked get `confidence.source` updated to `observed-from-code` or `inv
 
 | Command | Description |
 |---------|-------------|
-| `/nemp:cortex` | Full evolution + reflection report |
-| `/nemp:cortex status` | Quick one-liner status |
-| `/nemp:cortex --apply` | Execute safe actions |
-| `/nemp:cortex --fuse` | Show fusion candidates |
-| `/nemp:cortex --chains` | Show learned access patterns |
-| `/nemp:cortex --history` | Memory evolution timeline |
-| `/nemp:cortex insight <task>` | Explain why memories would load |
-| `/nemp:cortex resolve` | Interactive conflict resolution |
-| `/nemp:cortex learn` | Extract lessons from last task |
-| `/nemp:cortex simulate <task>` | Predict needs before starting |
-| `/nemp:cortex trust` | Trust/reliability dashboard |
-| `/nemp:cortex validate` | Check memories against codebase |
-| `/nemp:cortex goal <desc>` | Create/manage active goals |
+| `/afmem:cortex` | Full evolution + reflection report |
+| `/afmem:cortex status` | Quick one-liner status |
+| `/afmem:cortex --apply` | Execute safe actions |
+| `/afmem:cortex --fuse` | Show fusion candidates |
+| `/afmem:cortex --chains` | Show learned access patterns |
+| `/afmem:cortex --history` | Memory evolution timeline |
+| `/afmem:cortex insight <task>` | Explain why memories would load |
+| `/afmem:cortex resolve` | Interactive conflict resolution |
+| `/afmem:cortex learn` | Extract lessons from last task |
+| `/afmem:cortex simulate <task>` | Predict needs before starting |
+| `/afmem:cortex trust` | Trust/reliability dashboard |
+| `/afmem:cortex validate` | Check memories against codebase |
+| `/afmem:cortex goal <desc>` | Create/manage active goals |
 
 ---
 
-## INTEGRATION WITH EXISTING NEMP FEATURES
+## INTEGRATION WITH EXISTING AFMEM FEATURES
 
 ### Foresight Integration
 Foresight scoring formula becomes:
@@ -841,7 +841,7 @@ relevance = semantic_match × 40
 ```
 
 ### Health Integration
-`/nemp:health` adds Cortex checks:
+`/afmem:health` adds Cortex checks:
 - Is Cortex tracking enabled?
 - Any extinct memories not yet archived?
 - Any unresolved conflicts?
@@ -858,7 +858,7 @@ Last reflection: Feb 26, 2026
 ```
 
 ### Save Integration
-When `/nemp:save` runs:
+When `/afmem:save` runs:
 1. Auto-infer type if not provided
 2. Set initial confidence based on how it was created
 3. Initialize vitality tracking
@@ -874,7 +874,7 @@ When `/nemp:save` runs:
 - Auto-type inference on save
 - Usage tracking hooks in all read paths
 - Vitality score calculation
-- `/nemp:cortex status` command
+- `/afmem:cortex status` command
 - **Deliverable:** Every memory gets classified, every read gets tracked
 
 ### Phase 2: Episodes + Decay (~2 hours)
@@ -882,34 +882,34 @@ When `/nemp:save` runs:
 - Episode lifecycle (start/track/close)
 - Vitality decay engine (type-aware decay rates)
 - Auto-archive extinct memories
-- `/nemp:cortex --history`
+- `/afmem:cortex --history`
 - **Deliverable:** Memory lifecycle is automatic
 
 ### Phase 3: Intelligence (~3 hours)
 - Fusion detection + LLM-generated fused values
 - Contradiction engine (detect + track)
 - Semantic compression suggestions
-- `/nemp:cortex --fuse` and `/nemp:cortex resolve`
+- `/afmem:cortex --fuse` and `/afmem:cortex resolve`
 - **Deliverable:** Memory actively improves itself
 
 ### Phase 4: Prediction + Causal (~2 hours)
 - Access chain detection and storage
 - Foresight integration (chain prediction boost)
 - Causal link extraction from episodes
-- `/nemp:cortex --chains`
+- `/afmem:cortex --chains`
 - **Deliverable:** Memory predicts what you need
 
 ### Phase 5: Cognitive Commands (~3 hours)
 - Reflection engine + CLAUDE.md sync
 - Correction feedback loop
-- `/nemp:cortex insight`, `learn`, `simulate`
+- `/afmem:cortex insight`, `learn`, `simulate`
 - **Deliverable:** Memory explains itself
 
 ### Phase 6: Validation + Trust + Meta (~2 hours)
 - Codebase validation engine
 - Trust dashboard
 - Meta-memory tracking
-- `/nemp:cortex trust` and `/nemp:cortex validate`
+- `/afmem:cortex trust` and `/afmem:cortex validate`
 - Goal memory management
 - Scoped contexts
 - **Deliverable:** Memory verifies itself
@@ -922,7 +922,7 @@ When `/nemp:save` runs:
 
 **What nobody else has:**
 
-| Capability | Nemp Cortex | Mem0 | claude-mem | Zep | Supermemory |
+| Capability | AF Memory Cortex | Mem0 | claude-mem | Zep | Supermemory |
 |-----------|-------------|------|-----------|-----|-------------|
 | Memory types | ✅ 11 types | ❌ | ❌ | ❌ | ❌ |
 | Confidence scores | ✅ | ❌ | ❌ | ❌ | ❌ |
@@ -943,6 +943,6 @@ When `/nemp:save` runs:
 
 **The pitch:**
 
-> "Nemp Cortex is the first AI memory system that thinks. It doesn't just store — it types, scores, validates, predicts, detects contradictions, learns from mistakes, and rewrites itself to be better. All locally. No cloud. No ML. The LLM you're already running IS the brain."
+> "AF Memory Cortex is the first AI memory system that thinks. It doesn't just store — it types, scores, validates, predicts, detects contradictions, learns from mistakes, and rewrites itself to be better. All locally. No cloud. No ML. The LLM you're already running IS the brain."
 
-> "Every other tool is a filing cabinet. Nemp is a cortex."
+> "Every other tool is a filing cabinet. AF Memory is a cortex."

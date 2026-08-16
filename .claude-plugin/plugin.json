@@ -1,14 +1,14 @@
 {
-  "name": "nemp",
+  "name": "afmem",
   "version": "0.3.0",
-  "description": "Nemp Memory — Cognitive memory layer for AI agents across every platform. Local-first, zero cloud, works with Claude, Codex, Cursor, and Windsurf.",
+  "description": "AF Memory \u2014 persistent project memory for AF Expert Consulting. Local-first, committed to the repo, no cloud, no API keys.",
   "author": {
-    "name": "Sukin Shetty",
-    "email": "contact@nemp.dev",
-    "url": "https://github.com/SukinShetty"
+    "name": "Craig Harclerode",
+    "email": "craig.harclerode@gmail.com",
+    "url": "https://github.com/craigharclerode-cmd"
   },
-  "homepage": "https://nemp.dev",
-  "repository": "https://github.com/SukinShetty/Nemp-memory",
+  "homepage": "https://piafc.com",
+  "repository": "https://github.com/craigharclerode-cmd/af-memory",
   "license": "MIT",
   "commands": "./commands/",
   "skills": "./skills/"

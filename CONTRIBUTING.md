@@ -1,6 +1,6 @@
-# Contributing to Nemp
+# Contributing to AF Memory
 
-Thank you for considering contributing to Nemp! 🎉
+Thank you for considering contributing to AF Memory! 🎉
 
 ## How to Contribute
 
@@ -25,10 +25,10 @@ Thank you for considering contributing to Nemp! 🎉
 ### Development Setup
 ```bash
 # Clone your fork
-git clone https://github.com/YOUR_USERNAME/Nemp-memory.git
+git clone https://github.com/YOUR_USERNAME/AF Memory-memory.git
 
 # Install as local plugin
-cd Nemp-memory
+cd AF Memory-memory
 claude plugin install .
 ```
 
@@ -40,8 +40,8 @@ claude plugin install .
 
 ## Questions?
 
-Open an issue or email us at contact@nemp.dev
+Open an issue or email us at craig.harclerode@gmail.com
 
 ---
 
-Thank you for making Nemp better! ⭐
+Thank you for making AF Memory better! ⭐

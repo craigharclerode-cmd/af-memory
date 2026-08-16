@@ -3,13 +3,13 @@ description: "Auto-detect project stack and save as memories"
 argument-hint: ""
 ---
 
-# /nemp:init
+# /afmem:init
 
 Intelligently scan your project and auto-save context as memories.
 
 ## Instructions
 
-You are an intelligent project analyzer. Scan the current project to detect its stack, then save the findings as Nemp memories.
+You are an intelligent project analyzer. Scan the current project to detect its stack, then save the findings as AF Memory memories.
 
 ### Step 1: Lightweight Scan (Token Optimized)
 
@@ -114,7 +114,7 @@ From package.json, detect everything using the tables in Step 3.
 ### Step 4: Display Summary
 
 Show a compact summary:
-🔍 NEMP PROJECT SCAN
+🔍 AFMEM PROJECT SCAN
 Project: [name from package.json]
 Framework: [detected]
 Language: [TypeScript/JavaScript]
@@ -126,7 +126,7 @@ Package Manager: [npm/yarn/pnpm/bun from lockfile in Step 1]
 
 ### Step 5: Save ALL Memories in ONE Write
 
-**CRITICAL: Do NOT call /nemp:save individually for each memory. Build the full JSON object and write once.**
+**CRITICAL: Do NOT call /afmem:save individually for each memory. Build the full JSON object and write once.**
 
 Only include keys for things actually detected. Compress all values to under 100 characters.
 ```json
@@ -135,45 +135,45 @@ Only include keys for things actually detected. Compress all values to under 100
     "value": "Next.js 14 + TypeScript + Prisma + PostgreSQL + Tailwind",
     "created": "<ISO-8601>",
     "updated": "<ISO-8601>",
-    "agent_id": "nemp-init",
+    "agent_id": "afmem-init",
     "tags": ["auto-detected"]
   },
   "framework": {
     "value": "Next.js 14, App Router",
     "created": "<ISO-8601>",
     "updated": "<ISO-8601>",
-    "agent_id": "nemp-init",
+    "agent_id": "afmem-init",
     "tags": ["auto-detected"]
   },
   "database": {
     "value": "PostgreSQL via Prisma",
     "created": "<ISO-8601>",
     "updated": "<ISO-8601>",
-    "agent_id": "nemp-init",
+    "agent_id": "afmem-init",
     "tags": ["auto-detected"]
   }
 }
 ```
 
-Write this to `.nemp/memories.json` in a single operation:
+Write this to `memory/memories.json` in a single operation:
 ```bash
-mkdir -p .nemp
+mkdir -p .afmem
 ```
 
 Then use the Write tool to save the complete JSON.
 
-If `.nemp/memories.json` already exists, merge: preserve existing keys, only add/update detected keys.
+If `memory/memories.json` already exists, merge: preserve existing keys, only add/update detected keys.
 
 ### Step 6: Log the Init Operation
 ```bash
-echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] INIT agent=nemp-init memories_saved=<count>" >> .nemp/access.log
+echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] INIT agent=afmem-init memories_saved=<count>" >> memory/access.log
 ```
 
 ### Step 7: Generate MEMORY.md Index
 
-Create or update `.nemp/MEMORY.md`:
+Create or update `memory/MEMORY.md`:
 ```markdown
-# Nemp Memory Index
+# AF Memory Index
 
 > Auto-generated. Last updated: [YYYY-MM-DD HH:MM]
 
@@ -181,9 +181,9 @@ Create or update `.nemp/MEMORY.md`:
 
 | Key | Preview | Agent | Updated |
 |-----|---------|-------|---------|
-| stack | Next.js 14 + TypeScript... | nemp-init | 2026-02-11 |
-| database | PostgreSQL via Prisma | nemp-init | 2026-02-11 |
-| auth | NextAuth.js with JWT | nemp-init | 2026-02-11 |
+| stack | Next.js 14 + TypeScript... | afmem-init | 2026-02-11 |
+| database | PostgreSQL via Prisma | afmem-init | 2026-02-11 |
+| auth | NextAuth.js with JWT | afmem-init | 2026-02-11 |
 
 ## Files
 
@@ -199,13 +199,13 @@ Create or update `.nemp/MEMORY.md`:
 
 After saving all memories, check:
 ```bash
-[ -f ".nemp/config.json" ] && cat .nemp/config.json
+[ -f "memory/config.json" ] && cat memory/config.json
 ```
 
 If `"autoSync": true`, generate and update CLAUDE.md with all memories grouped by category. Same logic as save.md.
 
 ### Step 9: Show Completion
-✓ Nemp initialized! Saved [X] memories.
+✓ AF Memory initialized! Saved [X] memories.
 stack: Next.js 14 + TypeScript + Prisma...
 database: PostgreSQL via Prisma
 auth: NextAuth.js with JWT
@@ -213,20 +213,20 @@ styling: Tailwind CSS
 package-manager: pnpm
 ✓ MEMORY.md index generated
 ✓ CLAUDE.md synced    ← only if auto-sync enabled
-/nemp:list        View all memories
-/nemp:context     Search by keyword
+/afmem:list        View all memories
+/afmem:context     Search by keyword
 
 ## Important Notes
 
 - Only save memories for things actually detected
 - Compress values: "Next.js 14 + TypeScript" not "We are using Next.js version 14 with TypeScript"
 - If memories already exist, merge — don't overwrite without asking
-- All memories get `agent_id: "nemp-init"` and `tags: ["auto-detected"]`
+- All memories get `agent_id: "afmem-init"` and `tags: ["auto-detected"]`
 
 ## Error Handling
 
 If no package.json found:
 ⚠️ No package.json found.
 For Python/Rust/Go projects, save manually:
-/nemp:save stack Python + FastAPI + PostgreSQL
-/nemp:save framework FastAPI with SQLAlchemy
+/afmem:save stack Python + FastAPI + PostgreSQL
+/afmem:save framework FastAPI with SQLAlchemy

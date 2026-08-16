@@ -3,14 +3,14 @@ description: "Analyze activity and suggest memories to save"
 argument-hint: "[--auto]"
 ---
 
-# /nemp:suggest
+# /afmem:suggest
 
 Intelligently suggest memories to save based on your recent work patterns.
 
 ## Usage
 ```bash
-/nemp:suggest            # Analyze and show suggestions interactively
-/nemp:suggest --auto     # Automatically save all suggestions
+/afmem:suggest            # Analyze and show suggestions interactively
+/afmem:suggest --auto     # Automatically save all suggestions
 ```
 
 ## Instructions
@@ -19,18 +19,18 @@ You are an intelligent pattern analyzer. Examine the user's recent activity and 
 
 ### Step 1: Read Activity Log
 
-Read the activity log from `.nemp/activity.log` or `.nemp-pro/activity.log`.
+Read the activity log from `memory/activity.log` or `memory/pro/activity.log`.
 
 If no activity log exists:
 ```
 No Activity Log Found
 
 Enable activity capture to get personalized suggestions:
-  /nemp:auto-capture on
+  /afmem:auto-capture on
 
 Or manually add memories:
-  /nemp:save <key> <value>
-  /nemp:init              # Auto-detect project stack
+  /afmem:save <key> <value>
+  /afmem:init              # Auto-detect project stack
 ```
 
 ### Step 2: Parse and Analyze Patterns
@@ -219,7 +219,7 @@ Show suggestions in a beautiful, scannable format:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  NEMP MEMORY SUGGESTIONS                                        │
+│  AFMEM MEMORY SUGGESTIONS                                        │
 │  Based on your recent activity patterns                         │
 ├─────────────────────────────────────────────────────────────────┤
 │  Analyzed   45 activities                                       │
@@ -345,7 +345,7 @@ If more than 5 suggestions, use compact display:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  NEMP MEMORY SUGGESTIONS (8 found)                              │
+│  AFMEM MEMORY SUGGESTIONS (8 found)                              │
 └─────────────────────────────────────────────────────────────────┘
 
   #   KEY                  PRIORITY   DRAFTED VALUE (preview)
@@ -512,7 +512,7 @@ Which suggestions would you like to save?
 For each selected suggestion, save it:
 ```bash
 # Save to project memories
-/nemp:save important-files "Core files: src/auth/login.ts, src/api/users.ts..."
+/afmem:save important-files "Core files: src/auth/login.ts, src/api/users.ts..."
 ```
 
 **Auto Mode (--auto):**
@@ -534,7 +534,7 @@ Auto-saving suggestions...
 Before saving, check if a memory with the same key exists:
 
 ```bash
-# Read .nemp/memories.json to check for duplicates
+# Read memory/memories.json to check for duplicates
 ```
 
 If duplicate found:
@@ -560,12 +560,12 @@ Suggestions Applied
   - core-modules
 
 View your memories:
-  /nemp:list              List all memories
-  /nemp:recall <key>      View a specific memory
+  /afmem:list              List all memories
+  /afmem:recall <key>      View a specific memory
 
 Keep capturing activity:
-  /nemp:auto-capture on   Enable auto-capture
-  /nemp:activity          View activity log
+  /afmem:auto-capture on   Enable auto-capture
+  /afmem:activity          View activity log
 ```
 
 ## Smart Detection Examples
@@ -730,12 +730,12 @@ If activity log has fewer than 5 entries:
 Not Enough Activity for Suggestions
 
 Your activity log has only 3 entries. Keep coding and run
-/nemp:suggest again after more activity is captured.
+/afmem:suggest again after more activity is captured.
 
 In the meantime:
-  /nemp:init              Auto-detect project stack
-  /nemp:save <key> <val>  Manually save memories
-  /nemp:auto-capture on   Enable auto-capture
+  /afmem:init              Auto-detect project stack
+  /afmem:save <key> <val>  Manually save memories
+  /afmem:auto-capture on   Enable auto-capture
 ```
 
 ---
@@ -855,9 +855,9 @@ deploy patterns:
 # STEP 1: Read and parse activity log
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-ACTIVITY_FILE=".nemp/activity.log"
+ACTIVITY_FILE="memory/activity.log"
 if [ ! -f "$ACTIVITY_FILE" ]; then
-  echo "No activity log found. Run /nemp:auto-capture on"
+  echo "No activity log found. Run /afmem:auto-capture on"
   exit 1
 fi
 
@@ -929,7 +929,7 @@ fi
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 echo "┌─────────────────────────────────────────────────────────────┐"
-echo "│  NEMP MEMORY SUGGESTIONS                                    │"
+echo "│  AFMEM MEMORY SUGGESTIONS                                    │"
 echo "│  Analyzed $ENTRY_COUNT activities                           │"
 echo "└─────────────────────────────────────────────────────────────┘"
 echo ""
@@ -1047,7 +1047,7 @@ draft_packages_memory() {
   local DRAFT=""
 
   # Extract recently installed packages from activity
-  PACKAGES=$(grep -oE "(npm install|yarn add|pnpm add) [^|]+" .nemp/activity.log | \
+  PACKAGES=$(grep -oE "(npm install|yarn add|pnpm add) [^|]+" memory/activity.log | \
              tail -5 | \
              sed 's/npm install //g; s/yarn add //g; s/pnpm add //g' | \
              tr '\n' ', ')
@@ -1162,7 +1162,7 @@ handle_selection() {
     # None
     [Nn] | none | NONE)
       echo "Skipped all suggestions."
-      echo "Run /nemp:suggest again anytime!"
+      echo "Run /afmem:suggest again anytime!"
       ;;
 
     # Edit before save
@@ -1219,7 +1219,7 @@ save_suggestions() {
   echo ""
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   echo "  Done! Saved $SAVED memories, skipped $SKIPPED"
-  echo "  View with: /nemp:list"
+  echo "  View with: /afmem:list"
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 }
 
@@ -1272,8 +1272,8 @@ if [ "$1" == "--auto" ]; then
   done
 
   echo ""
-  echo "Done! Run /nemp:list to see saved memories."
-  echo "Run /nemp:suggest (without --auto) for MEDIUM priority items."
+  echo "Done! Run /afmem:list to see saved memories."
+  echo "Run /afmem:suggest (without --auto) for MEDIUM priority items."
   exit 0
 fi
 ```
@@ -1282,11 +1282,11 @@ fi
 
 ## Proactive Intelligence
 
-### What Makes Nemp Smart
+### What Makes AF Memory Smart
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  NEMP INTELLIGENCE PRINCIPLES                                   │
+│  AFMEM INTELLIGENCE PRINCIPLES                                   │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  1. OBSERVANT                                                   │
@@ -1320,7 +1320,7 @@ Before presenting a suggestion, verify:
 □ Is this pattern significant? (3+ occurrences)
 □ Would this help a future session understand the project?
 □ Is the drafted value specific and accurate?
-□ Does this add value beyond what /nemp:init provides?
+□ Does this add value beyond what /afmem:init provides?
 □ Is this different from existing memories?
 ```
 
@@ -1330,7 +1330,7 @@ Before presenting a suggestion, verify:
 PLANNED IMPROVEMENTS:
 
 1. Session-End Suggestions
-   → Automatically run /nemp:suggest at session end
+   → Automatically run /afmem:suggest at session end
    → "Before you go, want to save these patterns?"
 
 2. Confidence Scoring
@@ -1352,8 +1352,8 @@ PLANNED IMPROVEMENTS:
 
 ## Related Commands
 
-- `/nemp:activity` - View the activity log
-- `/nemp:auto-capture` - Toggle activity capture
-- `/nemp:init` - Auto-detect project stack
-- `/nemp:save` - Manually save a memory
-- `/nemp:list` - List all saved memories
+- `/afmem:activity` - View the activity log
+- `/afmem:auto-capture` - Toggle activity capture
+- `/afmem:init` - Auto-detect project stack
+- `/afmem:save` - Manually save a memory
+- `/afmem:list` - List all saved memories
